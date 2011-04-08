@@ -1,0 +1,2 @@
+DB_path		= "{{DB_PATH}}"
+LOG_path	= "{{LOG_PATH}}"

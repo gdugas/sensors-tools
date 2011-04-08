@@ -1,0 +1,11 @@
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+
+import os,sys
+wdir = os.path.abspath( os.path.dirname(sys.argv[0]) + '/..' )
+sys.path.append(wdir)
+
+import sensors.output
+
+
+print sensors.output.Xml()
