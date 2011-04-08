@@ -8,6 +8,16 @@ sys.path.append(wdir)
 
 pwd = os.path.abspath( os.path.dirname(sys.argv[0]) )
 
+sensors_path = ''
+for path in os.environ['PATH'].split(':'):
+	if os.path.exists( path + '/sensors' ):
+		sensors_path = path + '/sensors'
+		break
+
+if sensors_path == '':
+	print "error: unable to find `sensors` program"
+	quit()
+
 files = []
 for f in os.listdir(pwd):
 	if os.path.isfile(pwd + '/' + f) and len(f) > 3 and f[len(f)-3:] == '.in':
@@ -19,6 +29,7 @@ for tpl in files:
 	for line in f:
 		line = line.replace('{{DB_PATH}}', pwd + '/db/history.db')
 		line = line.replace('{{LOG_PATH}}', pwd + '/logs')
+		line = line.replace('{{SENSORS_PATH}}', sensors_path)
 		outp.write(line)
 	f.close()
 	outp.close()
