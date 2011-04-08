@@ -1,3 +1,11 @@
 DB_path			= "{{DB_PATH}}"
 LOG_path		= "{{LOG_PATH}}"
+
 SENSORS_path	= "{{SENSORS_PATH}}"
+SENSORS_trigger	= 29
+SENSORS_periph	= "motherboard"
+SENSORS_num		= 3
+
+EMAIL_from		= "Firstname Lastname <sender@domain.com>"
+EMAIL_to		= "Firstname Lastname <receiver@domain.com>"]
+EMAIL_subject	= "Temp report"

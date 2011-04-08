@@ -1,0 +1,32 @@
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+
+import os,sys
+wdir = os.path.abspath( os.path.dirname(sys.argv[0]) + '/..' )
+sys.path.append(wdir)
+
+from xml.dom.minidom import parseString
+import sensors.output,sensors.report
+
+report	= 0
+dom		= parseString( sensors.output.Xml() )
+
+temps = dom.getElementsByTagName("temps")[0]
+for temp in temps.getElementsByTagName("temp"):
+	values = {}
+	values['periph']	= temp.getAttribute('name')
+	values['num']		= temp.getAttribute('num')
+	values['type']		= 'temp'
+	values['value']		= temp.getAttribute('value')
+	if values['periph'] == "motherboard" and int(values['num']) == 3:
+		if int(values['value']) >= 29:
+			report = 1
+
+if report == 1:
+	textreport = "Temp report:\n"
+	textreport = textreport + "------------\n"
+	textreport = textreport + "<pre>"
+	textreport = textreport + sensors.output.Xml()
+	textreport = textreport + "</pre>"
+	sensors.report.Mail(textreport)
+
