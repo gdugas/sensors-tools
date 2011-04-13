@@ -16,7 +16,6 @@ function loadChart( getData ) {
 		success: function(data){
 			var i=0;
 			$("sensor",data).each(function() { i++; });
-//			alert(i);
 			refreshChart(getData,data);
 		}
 	});
@@ -58,7 +57,7 @@ function refreshChart(getData, data) {
 			
 			var date = parseInt( $(this).attr('date') );
 			
-			if(  date - lastdate > step ) {
+			if(  date - lastdate >= step ) {
 				lastdate = date;
 				dates.push = date;
 				index++;
@@ -70,8 +69,13 @@ function refreshChart(getData, data) {
 				}else if($(this).attr('periph') == 'motherboard' && $(this).attr('num') == '3' ) {
 					mobo[index] = parseInt( $(this).attr('value') );
 				}
-			}
-			
+			} /*else if ( date - lastdate < step ) {
+				if( $(this).attr('periph') == 'core' && $(this).attr('num') == '0' && parseInt( $(this).attr('value') ) > core[index] ){
+					core[index] = parseInt( $(this).attr('value') );
+				}else if($(this).attr('periph') == 'motherboard' && $(this).attr('num') == '3' && parseInt( $(this).attr('value') ) > mobo[index] ) {
+					mobo[index] = parseInt( $(this).attr('value') );
+				}
+			}*/
 		}
 	});
 	

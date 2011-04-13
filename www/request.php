@@ -10,10 +10,13 @@ define('WEEK',		7  * DAY);
 define('MONTH',		4  * WEEK);
 
 // Default values
-if( ! isset( $_GET['view'] ) ) $view = 'hour';
+if( ! isset( $_GET['view'] ) ) $view = 'day';
 else $view = $_GET['view'];
-if( ! isset($_GET['date']) ) $startdate = time() - 3600;
+if( ! isset($_GET['date']) ) $startdate = time() - ( time() % DAY ) - 2*HOUR;
 else $startdate = intval( $_GET['date'] );
+
+//echo $startdate;
+//exit;
 
 // Time request
 switch( $view ) {

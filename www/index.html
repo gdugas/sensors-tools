@@ -17,8 +17,16 @@ input.active { color: #c00; }
 
 <script type="text/javascript" >
  
- var activeView = "hour";
- var selectView = "hour";
+ var activeView = "day";
+ var curDate	= 0;
+ var curSlide	= 0;
+ function callRefresh(){
+ 	var tosend = {
+			view : activeView,
+			date : parseInt($("#startdate").val())/1000 + ( $("#starthour").slider("value") ),
+		};
+	loadChart(tosend);
+ }
  
  $(document).ready( function() {
 	
@@ -26,6 +34,12 @@ input.active { color: #c00; }
 	$("#startdate").datepicker({
 		defaultDate: "+0d",
 		dateFormat: "@",
+		onSelect: function() {
+			if( curDate != $("#startdate").val() ) {
+				curDate = $("#startdate").val();
+				callRefresh();
+			}
+		}
 	}); $("#startdate").datepicker('setDate','+0d');
 	
 	// Slider (time)
@@ -36,29 +50,33 @@ input.active { color: #c00; }
 		slide: function(event, ui) {
 			var time = new Date();
 			time.setTime( (ui.value * 1000) - 3600000 );
-			$("#timecontent").text( time.getHours()+"h" + " "+ time.getMinutes()+"m"); }
+			$("#timecontent").text( time.getHours()+"h" + " "+ time.getMinutes()+"m"); },
+		change: function() {
+			if( curSlide != $("#starthour").slider("value") ) {
+				curSlide = $("#starthour").slider("value");
+				callRefresh();
+			}
+		}
 	});
 	
-	// Buttons
-	$('#views input[value="'+selectView+'"]').addClass("selected");
-	$('#views input[value="'+selectView+'"]').addClass("active");
+	// Button
+	$('#views input[value="'+activeView+'"]').addClass("active");
 	$("#views input").click(function() {
-		$('#views input[value="'+selectView+'"]').removeClass("selected");
-		selectView = $(this).val();
-		$(this).addClass("selected");
+		if( activeView != $(this).val() ) {
+		$('#views input[value="'+activeView+'"]').removeClass("active");
+		activeView = $(this).val();
+		$(this).addClass("active");
+		callRefresh();
+		}
 	});
 	
 	// Action on refresh
-	$("#refresh").click(function(){
-			var tosend = {
-				view : selectView,
-				date : parseInt($("#startdate").val())/1000 + ( $("#starthour").slider("value") ),
-			};
-			loadChart(tosend);
-	});
+	$("#refresh").click(function(){ callRefresh() });
 	
-	// Chargement graph
-	loadChart({});
+	curDate		= $("#startdate").val();
+	curSlide	= $("#starthour").slider("value");
+	
+	callRefresh();
  });
 
 </script>
