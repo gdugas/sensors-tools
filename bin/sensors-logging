@@ -13,7 +13,7 @@ import sensorsConf, sensors.db, sensors.output
 now	= int( time() )
 
 
-if not os.path.exists( sensorsConf.DB_path ):
+if not os.path.exists( sensorsConf.DB_name ):
 	sensors.db.create()
 
 dom = parseString(sensors.output.Xml())

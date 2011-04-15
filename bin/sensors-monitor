@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import os,sys
+
 wdir = os.path.abspath( os.path.dirname(sys.argv[0]) + '/..' )
 sys.path.append(wdir)
 
 from xml.dom.minidom import parseString
-import sensors.output,sensors.report
+import sensors.output,sensors.report,sensorsConf
 
 report	= 0
 dom		= parseString( sensors.output.Xml() )
@@ -18,8 +19,8 @@ for temp in temps.getElementsByTagName("temp"):
 	values['num']		= temp.getAttribute('num')
 	values['type']		= 'temp'
 	values['value']		= temp.getAttribute('value')
-	if values['periph'] == "motherboard" and int(values['num']) == 3:
-		if int(values['value']) >= 29:
+	if values['periph'] == sensorsConf.SENSORS_periph and int(values['num']) == sensorsConf.SENSORS_num:
+		if int(values['value']) >= sensorsConf.SENSORS_trigger:
 			report = 1
 
 if report == 1:

@@ -1,11 +1,18 @@
-DB_path			= "{{DB_PATH}}"
-LOG_path		= "{{LOG_PATH}}"
+# Sensors parameters
+SENSORS_path		= "{{SENSORS_PATH}}"
+SENSORS_num		= 1
+SENSORS_periph		= "motherboard"		# core | fan | motherboard,
+SENSORS_trigger		= 29
 
-SENSORS_path	= "{{SENSORS_PATH}}"
-SENSORS_trigger	= 29
-SENSORS_periph	= "motherboard"
-SENSORS_num		= 3
+# DB parameters
+DB_engine		= "sqlite3"				# only sqlite3 is available
+DB_name			= "{{DB_PATH}}"
+DB_password		= ""
+DB_server		= ""
+DB_user			= ""
 
-EMAIL_from		= "Firstname Lastname <sender@domain.com>"
-EMAIL_to		= "Firstname Lastname <receiver@domain.com>"]
-EMAIL_subject	= "Temp report"
+# EMAIL parameters
+EMAIL_from		= ""	# "Firstname Lastname <sender@domain.com>"
+EMAIL_to		= ""	# "Firstname Lastname <receiver@domain.com>"
+EMAIL_cc		= ""	# "cc1@domain.com, Firstname Lastname <cc2@domain.com>"
+EMAIL_subject		= "Temp report"

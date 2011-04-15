@@ -28,7 +28,6 @@ for tpl in files:
 	outp	= open( pwd + '/' + tpl[0:len(tpl)-3], 'w' )
 	for line in f:
 		line = line.replace('{{DB_PATH}}', pwd + '/db/history.db')
-		line = line.replace('{{LOG_PATH}}', pwd + '/logs')
 		line = line.replace('{{SENSORS_PATH}}', sensors_path)
 		outp.write(line)
 	f.close()

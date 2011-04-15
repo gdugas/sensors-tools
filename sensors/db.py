@@ -3,7 +3,7 @@
 import sensorsConf,sqlite3
 
 def create():
-	conn    = sqlite3.connect( sensorsConf.DB_path )
+	conn    = sqlite3.connect( sensorsConf.DB_name )
 	cursor	= conn.cursor()
 	request	= "CREATE TABLE temp (num NUMERIC, id INTEGER PRIMARY KEY, date NUMERIC, periph TEXT, type TEXT, value NUMERIC);"
 	cursor.execute(request)
@@ -11,7 +11,7 @@ def create():
 	cursor.close()
 
 def insert( values ):
-	conn    = sqlite3.connect( sensorsConf.DB_path )
+	conn    = sqlite3.connect( sensorsConf.DB_name )
 	cursor	= conn.cursor()
 	request = ""
 	request = request + "INSERT INTO temp(date,periph,num,type,value)"
