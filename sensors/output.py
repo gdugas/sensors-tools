@@ -58,10 +58,12 @@ def Xml():
 	outXml	= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 	
 	outXml	= outXml + "<monitor>\n"
-	outXml	= outXml + "<temps>\n"
+	outXml	= outXml + "<temperatures>\n"
 	for i in temps:
-		outXml = outXml + "\t<temp name=\""+i[0]+"\" num=\""+str(i[1])+"\" value=\""+str(i[2])+"\" />\n"
-	outXml = outXml + "</temps>\n"
+#		if i[0] == "core":
+#			i[0] = "processor"
+		outXml = outXml + "\t<temperature name=\""+i[0]+"\" num=\""+str(i[1])+"\" value=\""+str(i[2])+"\" />\n"
+	outXml = outXml + "</temperatures>\n"
 	outXml = outXml + "<fans>\n"
 	for i in fans:
 		outXml = outXml + "\t<fan name=\""+i[0]+"\" num=\""+str(i[1])+"\" value=\""+str(i[2])+"\" />\n"

@@ -19,8 +19,8 @@ if not os.path.exists( sensorsConf.DB_name ):
 dom = parseString(sensors.output.Xml())
 
 
-temps = dom.getElementsByTagName("temps")[0]
-for temp in temps.getElementsByTagName("temp"):
+temps = dom.getElementsByTagName("temperatures")[0]
+for temp in temps.getElementsByTagName("temperature"):
 	values = {}
 	values['date']		= now
 	values['periph']	= temp.getAttribute('name')
