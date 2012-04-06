@@ -64,7 +64,7 @@ function refreshChart(getData, data) {
 			}
 			
 			if( date - lastdate == 0 ) {
-				if( $(this).attr('periph') == 'core' && $(this).attr('num') == '0' ){
+				if( $(this).attr('periph') == 'core' && $(this).attr('num') == '1' ){
 					core[index] = parseInt( $(this).attr('value') );
 				}else if($(this).attr('periph') == 'motherboard' && $(this).attr('num') == '3' ) {
 					mobo[index] = parseInt( $(this).attr('value') );
@@ -85,7 +85,7 @@ function refreshChart(getData, data) {
 			defaultSeriesType: 'line'
 		},
 		title: {
-			text: 'Mbb Sensors history'
+			text: window.location.hostname +' Sensors history'
 		},
 		xAxis: {
 			categories: dates

@@ -32,6 +32,9 @@ subdirectory of sensor-tools here.
 [CONFIGURATION]
 
 First edit sensorsConf.py to map to your system and your preferences.
+To know what device(s) you want to monitor, you can execute :
+python bin/sensors-xml
+from sensors-tools install directory
 
 You can add a treshold to email you for temperature alerts.
 
