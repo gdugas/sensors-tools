@@ -16,6 +16,7 @@ import sensorsConf
 connection=sqlite3.connect(sensorsConf.DB_name)
 cursor=connection.cursor()
 cursor.execute('SELECT * FROM temp;')
+print "\n ######## SENSORS ######## \n\n"
 print cursor.fetchall()
 cursor.execute('SELECT COUNT(*) FROM temp;')
 print str(cursor.fetchall())+ ' enregistrements'
