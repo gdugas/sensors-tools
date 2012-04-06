@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os,sys
@@ -15,7 +16,15 @@ import sensorsConf
 #mydatabase="history.db"
 connection=sqlite3.connect(sensorsConf.DB_name)
 cursor=connection.cursor()
-cursor.execute('SELECT * FROM temp;')
+#print "\nTEMPERATURES\n\n"
+#cursor.execute('SELECT * FROM temp;')
+cursor.execute('SHOW TABLE;')
+#print cursor.fetchall()
+#print "\nVOLTAGES\n\n"
+#cursor.execute('SELECT * FROM voltage;')
+#print cursor.fetchall()
+#print "\nFANS\n\n"
+#cursor.execute('SELECT * FROM fan;')
 print cursor.fetchall()
 connection.commit()
 cursor.close()

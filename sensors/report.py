@@ -1,4 +1,5 @@
-# -*- coding:Utf-8 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import sensorsConf,smtplib
 from email.MIMEText import MIMEText

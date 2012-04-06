@@ -1,0 +1,13 @@
+[REQUIREMENTS]
+lm-sensors
+
+Launch "sensors-detect"
+
+
+Then
+
+First launch install.py python script with
+
+#python install.py
+
+You have to create a symlinks in your www directory to map to the www subdirectory of sensor-tools here.

@@ -13,7 +13,7 @@ import sensorsConf, sensors.db, sensors.output
 now	= int( time() )
 
 
-if not os.path.exists( sensorsConf.DB_name ):
+if not os.path.exists(sensorsConf.DB_name):
 	sensors.db.create()
 
 dom = parseString(sensors.output.Xml())
@@ -23,7 +23,7 @@ temps = dom.getElementsByTagName("temperatures")[0]
 for temp in temps.getElementsByTagName("temperature"):
 	values = {}
 	values['date']		= now
-	values['periph']	= temp.getAttribute('name')
+	values['dev']		= temp.getAttribute('name')
 	values['num']		= temp.getAttribute('num')
 	values['type']		= 'temp'
 	values['value']		= temp.getAttribute('value')
@@ -33,8 +33,18 @@ fans	= dom.getElementsByTagName("fans")[0]
 for fan in fans.getElementsByTagName("fan"):
 	values = {}
 	values['date']		= now
-	values['periph']	= fan.getAttribute('name')
+	values['dev']		= fan.getAttribute('name')
 	values['num']		= fan.getAttribute('num')
 	values['type']		= 'fan'
+	values['value']		= fan.getAttribute('value')
+	sensors.db.insert(values)
+
+volts	= dom.getElementsByTagName("voltages")[0]
+for fan in fans.getElementsByTagName("voltage"):
+	values = {}
+	values['date']		= now
+	values['dev']		= fan.getAttribute('name')
+	values['num']		= fan.getAttribute('num')
+	values['type']		= 'volt'
 	values['value']		= fan.getAttribute('value')
 	sensors.db.insert(values)
