@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os,re,sys
+import os,re,sys,subprocess
 
 wdir = os.path.abspath( os.path.dirname(sys.argv[0]) )
 sys.path.append(wdir)
@@ -15,7 +15,8 @@ for path in os.environ['PATH'].split(':'):
 		break
 
 if sensors_path == '':
-	print "error: unable to find `sensors` program"
+	print "Error: unable to find `sensors` program\n\
+	Please install it first (lm-sensors or lm_sensors)."
 	quit()
 
 files = []
@@ -34,3 +35,19 @@ for tpl in files:
 	outp.close()
 
 if not os.path.exists( pwd + '/db' ): os.mkdir( pwd + '/db' );
+
+
+with open("/etc/cron.d/sensors-tools", "w") as myfile:
+	#every 5 minutes monitor in a cron file...
+    myfile.write("*/5 * * * * root "+pwd + "/bin/sensors-logging\n")
+    myfile.write("*/5 * * * * root "+pwd + "/bin/sensors-monitor\n")
+
+cron_path = ""
+daemon_path = "/etc/init.d"
+if os.path.exists(daemon_path + '/cron'):
+	cron_path = daemon_path + '/cron'
+elif os.path.exists(daemon_path + '/crond'):
+	cron_path = daemon_path + '/crond'
+
+print cron_path
+subprocess.call(cron_path+" reload", shell=True)

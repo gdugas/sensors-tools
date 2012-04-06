@@ -130,7 +130,7 @@ def Xml():
     wdir        = os.path.abspath( os.path.dirname(sys.argv[0]) )
     
     # Output of sensors acquisition
-    process = subprocess.Popen( [sensors_cmd], stdout=subprocess.PIPE )
+    process = subprocess.Popen([sensors_cmd], stdout=subprocess.PIPE)
     
     sensorsOut = ''
     
