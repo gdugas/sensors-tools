@@ -11,6 +11,11 @@ can install the sensors-tools program.
 To use www highchart, please check that you enable sqlite PDO driver in php.ini
 You will find sqlite.so in php5-sqlite package on ubuntu.
 
+/etc/php5/apache2/conf.d/pdo.ini (or [/etc/php5/apache2/]php.ini)
+	extension=pdo.so
+	extension=pdo_sqlite.so
+	extension=sqlite.so
+
 
 [INSTALL]
 First launch install.py python script in root with

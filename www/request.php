@@ -1,6 +1,6 @@
 <?php
 
-define('DB_path', 'history.db');
+define('DB_path', '../db/history.db');
 
 // Time definitions
 define('MINUTE',	60 );
@@ -42,23 +42,31 @@ switch( $view ) {
 
 // Request
 $sql = "SELECT * FROM temp WHERE date >= '".$startdate."' AND date < '".$stopdate."' ";
-$pdo = new PDO('sqlite:' . DB_path);
+try
+	{
+	$pdo = new PDO('sqlite:' . DB_path);
+	}
+catch(PDOException $e)
+	{
+	echo $e->getMessage();
+	exit(1);
+	}
 
-
-// Display
-header('Content-type: text/xml');
-echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-echo '<monitor>';
-
-foreach( $pdo->query($sql) as $row ) {
-
-	$output = "\t" . '<sensor';
-	$output .= ' type="'	.$row['type'].		'"';
-	$output .= ' periph="'	.$row['periph'].	'"';
-	$output .= ' num="'		.$row['num'].	'"';
-	$output .= ' value="'	.$row['value'].		'"';
-	$output .= ' date="'	.$row['date'].		'" />';
-	echo $output . "\n";
-}
-echo '</monitor>';
+if($pdo)
+	{
+	// Display
+	header('Content-type: text/xml');
+	echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+	echo '<monitor>' . "\n";
+	foreach( $pdo->query($sql) as $row ) {
+		$output = "\t" . '<sensor';
+		$output .= ' type="'	.$row['type'].		'"';
+		$output .= ' periph="'	.$row['dev'].		'"';
+		$output .= ' num="'	.$row['num'].		'"';
+		$output .= ' value="'	.$row['value'].		'"';
+		$output .= ' date="'	.$row['date'].		'" />';
+		echo $output . "\n";
+		}
+	echo '</monitor>';
+	}
 ?>
