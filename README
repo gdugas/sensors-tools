@@ -28,5 +28,5 @@ First edit sensorsConf.py to map to your system and your preferences.
 
 You can add a treshold to email you for temperature alerts.
 
-You could change the /etc/cron.d/sensors file to save information every
+You could change the /etc/cron.d/sensors-tools file to save information every
 N minutes (5 by default).
