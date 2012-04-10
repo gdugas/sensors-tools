@@ -50,6 +50,4 @@ for volt in volts.getElementsByTagName("voltage"):
 	values['type'].append('volt')
 	values['value'].append(volt.getAttribute('value'))
 
-i = 0
-for i in range(len(values['date'])):
-	sensors.db.insert(str(values['date'][i]),values['dev'][i],values['num'][i],values['type'][i],values['value'][i])
+sensors.db.insert(values)
