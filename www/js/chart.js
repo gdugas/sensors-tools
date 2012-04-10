@@ -53,8 +53,10 @@ function refreshChart(getData, data) {
 	var dates	= [];
 	var i = 0;
 	
+	var monitor = $("#sensors2seeOnChart").val();
+	
 	$("#sensors2seeOnChart").change(function() {
-		var monitor = $(this).val();
+		monitor = $(this).val();
 		alert(monitor);	
 	});
 	
