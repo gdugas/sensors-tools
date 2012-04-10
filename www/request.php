@@ -48,6 +48,7 @@ try
 	}
 catch(PDOException $e)
 	{
+	echo "Could not connect to sqlite db... Check (pdo_)sqlite.so and that these mods are enable...<br />";
 	echo $e->getMessage();
 	exit(1);
 	}

@@ -47,7 +47,7 @@ def parseSensors(stdout):
                     temps.append(['motherboard',itemp,\
                     TempRegExp.group(2)])
                 else:
-                    fans.append(['unknown_device',itemp,\
+                    temps.append(['unknown_device',itemp,\
                     TempRegExp.group(2)])
         
         #fans

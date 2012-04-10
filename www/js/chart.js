@@ -41,10 +41,19 @@ function refreshChart(getData, data) {
 		default : 		step = 5 * $MINUTE; break; 
 	}
 	
-	var core	= [];
-	var mobo	= [];
+	var core		= [];
+	var mobo		= [];
+	var chassis		= [];
+	var unknown		= [];
+	var volts3		= [];
+	var volts5		= [];
+	var volts12		= [];
+	var volts1_5	= [];
+	
 	var dates	= [];
 	var i = 0;
+	
+	var monitor = $("#sensors2seeOnChart").val();
 	
 	var $fsens = $("sensor",data).first();
 	var date	= parseInt( $fsens.attr('date') );
@@ -53,7 +62,7 @@ function refreshChart(getData, data) {
 	
 	$("sensor",data).each( function(){
 		
-		if( $(this).attr('type') == 'temp' ) {
+		if( $(this).attr('type') == monitor ) {
 			
 			var date = parseInt( $(this).attr('date') );
 			
@@ -63,19 +72,17 @@ function refreshChart(getData, data) {
 				index++;
 			}
 			
-			if( date - lastdate == 0 ) {
-				if( $(this).attr('periph') == 'core' && $(this).attr('num') == '1' ){
-					core[index] = parseInt( $(this).attr('value') );
-				}else if($(this).attr('periph') == 'motherboard' && $(this).attr('num') == '3' ) {
-					mobo[index] = parseInt( $(this).attr('value') );
+			if( date - lastdate == 0 ) 
+				{
+				if( $(this).attr('periph') == 'core' || $(this).attr('periph') == 'Vcore' || $(this).attr('periph') == 'cpu_fan' )
+					{
+					core[index][$(this).attr('num')] = parseInt( $(this).attr('value') );
+					}
+				else if($(this).attr('periph') == 'motherboard' || $(this).attr('periph') == 'motherboard_fan') 
+					{
+					mobo[index][$(this).attr('num')] = parseInt( $(this).attr('value') );
+					}
 				}
-			} /*else if ( date - lastdate < step ) {
-				if( $(this).attr('periph') == 'core' && $(this).attr('num') == '0' && parseInt( $(this).attr('value') ) > core[index] ){
-					core[index] = parseInt( $(this).attr('value') );
-				}else if($(this).attr('periph') == 'motherboard' && $(this).attr('num') == '3' && parseInt( $(this).attr('value') ) > mobo[index] ) {
-					mobo[index] = parseInt( $(this).attr('value') );
-				}
-			}*/
 		}
 	});
 	
