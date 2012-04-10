@@ -20,17 +20,17 @@ def create():
 	conn.commit()
 	cursor.close()
 
-def insert(values):
+def insert(date,dev,devnum,devtype,devvalue):
 	conn    = sqlite3.connect(sensorsConf.DB_name)
 	cursor	= conn.cursor()
 	request = ""
 	request = request + "INSERT INTO temp(date,dev,num,type,value)"
 	request = request + "VALUES("
-	request = request + "'"+str(values['date'])+"',"
-	request = request + "'"+values['dev']+"',"
-	request = request + "'"+values['num']+"',"
-	request = request + "'"+values['type']+"',"
-	request = request + "'"+values['value']+"')"
+	request = request + "'"+date+"',"
+	request = request + "'"+dev+"',"
+	request = request + "'"+devnum+"',"
+	request = request + "'"+devtype+"',"
+	request = request + "'"+devvalue+"')"
 	cursor.execute(request)
 	conn.commit()
 	cursor.close()

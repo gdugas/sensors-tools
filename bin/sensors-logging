@@ -18,37 +18,38 @@ if not os.path.exists(sensorsConf.DB_name):
 
 dom = parseString(sensors.output.Xml())
 
-valuesTemp = {}
-valuesFans = {}
-valuesVolts = {}
+values = {}
 
+values['date'] 	= []
+values['dev'] 	= []
+values['num'] 	= []
+values['type'] 	= []
+values['value'] = []
 
 temps = dom.getElementsByTagName("temperatures")[0]
 for temp in temps.getElementsByTagName("temperature"):
-	valuesTemp['date'].append(now)
-	valuesTemp['dev'].append(temp.getAttribute('name'))
-	valuesTemp['num'].append(temp.getAttribute('num'))
-	valuesTemp['type'].append('temp')
-	valuesTemp['value'].append(temp.getAttribute('value'))
-
-sensors.db.insert(valuesTemp)
+	values['date'].append(now)
+	values['dev'].append(temp.getAttribute('name'))
+	values['num'].append(temp.getAttribute('num'))
+	values['type'].append('temp')
+	values['value'].append(temp.getAttribute('value'))
 
 fans	= dom.getElementsByTagName("fans")[0]
 for fan in fans.getElementsByTagName("fan"):
-	valuesFans['date'].append(now)
-	valuesFans['dev'].append(fan.getAttribute('name'))
-	valuesFans['num'].append(fan.getAttribute('num'))
-	valuesFans['type'].append('fan')
-	valuesFans['value'].append(fan.getAttribute('value'))
-
-sensors.db.insert(valuesFans)
+	values['date'].append(now)
+	values['dev'].append(fan.getAttribute('name'))
+	values['num'].append(fan.getAttribute('num'))
+	values['type'].append('fan')
+	values['value'].append(fan.getAttribute('value'))
 
 volts	= dom.getElementsByTagName("voltages")[0]
 for volt in volts.getElementsByTagName("voltage"):
-	valuesVolts['date'].append(now)
-	valuesVolts['dev'].append(volt.getAttribute('name'))
-	valuesVolts['num'].append(volt.getAttribute('num'))
-	valuesVolts['type'].append('volt')
-	valuesVolts['value'].append(volt.getAttribute('value'))
+	values['date'].append(now)
+	values['dev'].append(volt.getAttribute('name'))
+	values['num'].append(volt.getAttribute('num'))
+	values['type'].append('volt')
+	values['value'].append(volt.getAttribute('value'))
 
-sensors.db.insert(valuesVolts)
+i = 0
+for i in range(len(values['date'])):
+	sensors.db.insert(str(values['date'][i]),values['dev'][i],values['num'][i],values['type'][i],values['value'][i])
