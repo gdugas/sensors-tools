@@ -18,33 +18,43 @@ if not os.path.exists(sensorsConf.DB_name):
 
 dom = parseString(sensors.output.Xml())
 
+valuesTemp = []
+valuesFans = []
+valuesVolts = []
+
 
 temps = dom.getElementsByTagName("temperatures")[0]
+i = 0
 for temp in temps.getElementsByTagName("temperature"):
-	values = {}
-	values['date']		= now
-	values['dev']		= temp.getAttribute('name')
-	values['num']		= temp.getAttribute('num')
-	values['type']		= 'temp'
-	values['value']		= temp.getAttribute('value')
-	sensors.db.insert(values)
+	valuesTemp[i] = {}
+	valuesTemp[i]['date']		= now
+	valuesTemp[i]['dev']		= temp.getAttribute('name')
+	valuesTemp[i]['num']		= temp.getAttribute('num')
+	valuesTemp[i]['type']		= 'temp'
+	valuesTemp[i]['value']		= temp.getAttribute('value')
+	sensors.db.insert(valuesTemp[i])
+	i = i + 1
 
 fans	= dom.getElementsByTagName("fans")[0]
+i = 0
 for fan in fans.getElementsByTagName("fan"):
-	values = {}
-	values['date']		= now
-	values['dev']		= fan.getAttribute('name')
-	values['num']		= fan.getAttribute('num')
-	values['type']		= 'fan'
-	values['value']		= fan.getAttribute('value')
-	sensors.db.insert(values)
+	valuesFans[i] = {}
+	valuesFans[i]['date']		= now
+	valuesFans[i]['dev']		= fan.getAttribute('name')
+	valuesFans[i]['num']		= fan.getAttribute('num')
+	valuesFans[i]['type']		= 'fan'
+	valuesFans[i]['value']		= fan.getAttribute('value')
+	sensors.db.insert(valuesFans[i])
+	i = i + 1
 
 volts	= dom.getElementsByTagName("voltages")[0]
-for fan in fans.getElementsByTagName("voltage"):
-	values = {}
-	values['date']		= now
-	values['dev']		= fan.getAttribute('name')
-	values['num']		= fan.getAttribute('num')
-	values['type']		= 'volt'
-	values['value']		= fan.getAttribute('value')
-	sensors.db.insert(values)
+i = 0
+for volt in volts.getElementsByTagName("voltage"):
+	valuesVolts[i] = {}
+	valuesVolts[i]['date']		= now
+	valuesVolts[i]['dev']		= volt.getAttribute('name')
+	valuesVolts[i]['num']		= volt.getAttribute('num')
+	valuesVolts[i]['type']		= 'volt'
+	valuesVolts[i]['value']		= volt.getAttribute('value')
+	sensors.db.insert(valuesVolts[i])
+	i = i + 1

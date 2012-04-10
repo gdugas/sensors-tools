@@ -62,7 +62,7 @@ if($pdo)
 		$output = "\t" . '<sensor';
 		$output .= ' type="'	.$row['type'].		'"';
 		$output .= ' periph="'	.$row['dev'].		'"';
-		$output .= ' num="'	.$row['num'].		'"';
+		$output .= ' num="'		.$row['num'].		'"';
 		$output .= ' value="'	.$row['value'].		'"';
 		$output .= ' date="'	.$row['date'].		'" />';
 		echo $output . "\n";
