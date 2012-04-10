@@ -24,37 +24,31 @@ valuesVolts = []
 
 
 temps = dom.getElementsByTagName("temperatures")[0]
-i = 0
 for temp in temps.getElementsByTagName("temperature"):
-	valuesTemp[i] = {}
-	valuesTemp[i]['date']		= now
-	valuesTemp[i]['dev']		= temp.getAttribute('name')
-	valuesTemp[i]['num']		= temp.getAttribute('num')
-	valuesTemp[i]['type']		= 'temp'
-	valuesTemp[i]['value']		= temp.getAttribute('value')
-	sensors.db.insert(valuesTemp[i])
-	i = i + 1
+	valuesTemp['date'].append(now)
+	valuesTemp['dev'].append(temp.getAttribute('name'))
+	valuesTemp['num'].append(temp.getAttribute('num'))
+	valuesTemp['type'].append('temp')
+	valuesTemp['value'].append(temp.getAttribute('value'))
+
+sensors.db.insert(valuesTemp)
 
 fans	= dom.getElementsByTagName("fans")[0]
-i = 0
 for fan in fans.getElementsByTagName("fan"):
-	valuesFans[i] = {}
-	valuesFans[i]['date']		= now
-	valuesFans[i]['dev']		= fan.getAttribute('name')
-	valuesFans[i]['num']		= fan.getAttribute('num')
-	valuesFans[i]['type']		= 'fan'
-	valuesFans[i]['value']		= fan.getAttribute('value')
-	sensors.db.insert(valuesFans[i])
-	i = i + 1
+	valuesFans['date'].append(now)
+	valuesFans['dev'].append(fan.getAttribute('name'))
+	valuesFans['num'].append(fan.getAttribute('num'))
+	valuesFans['type'].append('fan')
+	valuesFans['value'].append(fan.getAttribute('value'))
+
+sensors.db.insert(valuesFans)
 
 volts	= dom.getElementsByTagName("voltages")[0]
-i = 0
 for volt in volts.getElementsByTagName("voltage"):
-	valuesVolts[i] = {}
-	valuesVolts[i]['date']		= now
-	valuesVolts[i]['dev']		= volt.getAttribute('name')
-	valuesVolts[i]['num']		= volt.getAttribute('num')
-	valuesVolts[i]['type']		= 'volt'
-	valuesVolts[i]['value']		= volt.getAttribute('value')
-	sensors.db.insert(valuesVolts[i])
-	i = i + 1
+	valuesVolts['date'].append(now)
+	valuesVolts['dev'].append(volt.getAttribute('name'))
+	valuesVolts['num'].append(volt.getAttribute('num'))
+	valuesVolts['type'].append('volt')
+	valuesVolts['value'].append(volt.getAttribute('value'))
+
+sensors.db.insert(valuesVolts)
