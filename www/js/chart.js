@@ -57,9 +57,9 @@ function refreshChart(getData, data) {
 	
 	$("#sensors2seeOnChart").change(function() {
 		monitor = $(this).val();
-		alert(monitor);	
 	});
 	
+	alert(monitor);	
 	
 	var $fsens = $("sensor",data).first();
 	var date	= parseInt( $fsens.attr('date') );
