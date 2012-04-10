@@ -20,11 +20,6 @@ function loadChart( getData ) {
 		}
 	});
 }
-
-function displayVals() 
-	{
-		var monitor_value = $("#sensors2seeOnChart").val();
-	}
 	
 function refreshChart(getData, data) {
 	
@@ -58,8 +53,11 @@ function refreshChart(getData, data) {
 	var dates	= [];
 	var i = 0;
 	
-	var monitor = $("select").change(displayVals);
-	alert(monitor);
+	$("#sensors2seeOnChart").change(function() {
+		var monitor = $(this).val();
+		alert(monitor);	
+	});
+	
 	
 	var $fsens = $("sensor",data).first();
 	var date	= parseInt( $fsens.attr('date') );
