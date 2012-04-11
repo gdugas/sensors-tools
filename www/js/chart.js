@@ -3,7 +3,6 @@ var dates;
 
 
 var nummax = 0;
-var k=0;
 
 myseries = new Array();
 
@@ -35,7 +34,7 @@ function loadChart( getData ) {
 		string += "&view="+ getData.view;
     var monitor = $("#sensors2seeOnChart").val();
 		$("#sensors2seeOnChart").change(function() {
-		monitor = $(this).val();
+			monitor = $(this).val();
     });
     $.ajax({
 		url: "request.php",
@@ -46,73 +45,47 @@ function loadChart( getData ) {
 			$("sensor",data).each(function() {
 				i++;
 				refreshChart(getData,data,monitor);
-			});
-		}
-    });
-    }
+				});
+			}
+		});
+}
 
 function parseAttr(monitor,index,num,attr,value)
     {
     if(monitor == "temp")
 		{
 		if( attr == 'core')
-			{
-			myseries['core_temp'][num][index] = parseInt(value);
-			}
+			{ myseries['core_temp'][num][index] = parseInt(value); }
 		else if(attr == 'motherboard')
-			{
-			myseries['motherboard_temp'][num][index] = parseInt(value);
-			}
+			{ myseries['motherboard_temp'][num][index] = parseInt(value); }
 		else if(attr == 'unknown_device')
-			{
-			myseries['unknown_devices'][num][index] = parseInt(value);
-			}
+			{ myseries['unknown_devices'][num][index] = parseInt(value); }
 		}
     else if(monitor == "fan")
-		{
+		{ 
 		if( attr == 'cpu_fan')
-			{
-			myseries['cpu_fans'][num][index] = parseInt(value);
-			}
+			{ myseries['cpu_fans'][num][index] = parseInt(value); }
 		else if(attr == 'chassis_fan')
-			{
-			myseries['chassis_fans'][num][index] = parseInt(value);
-			}
+			{ myseries['chassis_fans'][num][index] = parseInt(value); }
 		else if(attr == 'motherboard_fan')
-			{
-			myseries['motherboard_fans'][num][index] = parseInt(value);
-			}
+			{ myseries['motherboard_fans'][num][index] = parseInt(value); }
 		else if(attr == 'unknown_fan')
-			{
-			myseries['unknown_fans'][num][index] = parseInt(value);
-			}
+			{ myseries['unknown_fans'][num][index] = parseInt(value); }
 		}
     else if(monitor == "volt")
 		{
 		if( attr == 'Vcore')
-			{
-			myseries['vcore'][num][index] = parseInt(value);
-			}
+			{ myseries['vcore'][num][index] = parseInt(value); }
 		else if(attr == '3.3V')
-			{
-			myseries['volts3'][num][index] = parseInt(value);
-			}
+			{ myseries['volts3'][num][index] = parseInt(value);	}
 		else if(attr == '5V')
-			{
-			myseries['volts5'][num][index] = parseInt(value);
-			}
+			{ myseries['volts5'][num][index] = parseInt(value);	}
 		else if(attr == '12V')
-			{
-			myseries['volts12'][num][index] = parseInt(value);
-			}
+			{ myseries['volts12'][num][index] = parseInt(value); }
 		else if(attr == '1.5V')
-			{
-			myseries['volts1_5'][num][index] = parseInt(value);
-			}
+			{ myseries['volts1_5'][num][index] = parseInt(value); }
 		else if(attr == 'unknown_voltage')
-			{
-			myseries['unknown_voltages'][num][index] = parseInt(value);
-			}
+			{ myseries['unknown_voltages'][num][index] = parseInt(value); }
 		}
     }
 
@@ -184,27 +157,30 @@ function refreshChart(getData, data, monitor) {
 
 function printChart(myseries,index,monitor,nummax)
     {
-    var j = 1;
+    var j 	= 1;
     myarray = [];
-    myname = [];
+    myname 	= [];
     if(monitor == "temp")
 		{
 		for(j=1;j<=nummax;j++)
 			{
 			if(myseries['core_temp'] !== undefined && myseries['core_temp'][j] !== undefined)
 				{
+				myarray[0][j] = [];
 				myarray[0][j] = myseries['core_temp'][j];
-				myname[0][j] = "Core temperature sensor number "+j.toString();
+				myname[0][j]  = "Core temperature sensor number "+j.toString();
 				}
 			if(myseries['motherboard_temp'] !== undefined && myseries['motherboard_temp'][j] !== undefined)
 				{
+				myarray[1][j] = [];
 				myarray[1][j] = myseries['motherboard_temp'][j];
-				myname[1][j] = "Motherboard temperature number "+j.toString();
+				myname[1][j]  = "Motherboard temperature number "+j.toString();
 				}
 			if(myseries['unknown_devices'] !== undefined && myseries['unknown_devices'][j] != undefined)
 				{
+				myarray[2][j] = [];
 				myarray[2][j] = myseries['unknown_devices'][j];
-				myname[2][j] = "Unknown temperature for device number "+j.toString();
+				myname[2][j]  = "Unknown temperature for device number "+j.toString();
 				}
 			}
 		}
@@ -214,23 +190,27 @@ function printChart(myseries,index,monitor,nummax)
 			{
 			if(myseries['cpu_fans'] !== undefined && myseries['cpu_fans'][j] !== undefined)
 				{
-				myarray[0][j] = myseries['cpu_fans'][j];
-				myname[0][j] = "CPU fan sensor number "+j.toString();
+				myarray[3][j] = [];
+				myarray[3][j] = myseries['cpu_fans'][j];
+				myname[3][j]  = "CPU fan sensor number "+j.toString();
 				}
 			if(myseries['chassis_fans'] !== undefined && myseries['chassis_fans'][j] !== undefined)
 				{
-				myarray[1][j] = myseries['chassis_fans'][j];
-				myname[1][j] = "Chassis fan sensor number "+j.toString();
+				myarray[4][j] = [];
+				myarray[4][j] = myseries['chassis_fans'][j];
+				myname[4][j]  = "Chassis fan sensor number "+j.toString();
 				}
 			if(myseries['motherboard_fans'] !== undefined && myseries['motherboard_fans'][j] !== undefined)
 				{
-				myarray[2][j] = myseries['motherboard_fans'][j];
-				myname[2][j] = "Motherboard fan sensor number "+j.toString();
+				myarray[5][j] = [];
+				myarray[5][j] = myseries['motherboard_fans'][j];
+				myname[5][j]  = "Motherboard fan sensor number "+j.toString();
 				}
 			if(myseries['unknown_fans'] !== undefined && myseries['unknown_fans'][j] !== undefined)
 				{
-				myarray[3][j] = myseries['unknown_fans'][j];
-				myname[3][j] = "Unknown fan for sensor number "+j.toString();
+				myarray[6][j] = [];
+				myarray[6][j] = myseries['unknown_fans'][j];
+				myname[6][j]  = "Unknown fan for sensor number "+j.toString();
 				}
 			}
 		}
@@ -240,33 +220,39 @@ function printChart(myseries,index,monitor,nummax)
 			{
 			if(myseries['vcore'] !== undefined && myseries['vcore'][j] !== undefined)
 				{
-				myarray[0][j] = myseries['vcore'][j];
-				myname[0][j] = "VCore sensor number "+j.toString();
+				myarray[7][j] = [];
+				myarray[7][j] = myseries['vcore'][j];
+				myname[7][j]  = "VCore sensor number "+j.toString();
 				}
 			if(myseries['volts3'] !== undefined && myseries['volts3'][j] !== undefined)
 				{
-				myarray[1][j] = myseries['volts3'][j];
-				myname[1][j] = "3,3V sensors number "+j.toString();
+				myarray[8][j] = [];
+				myarray[8][j] = myseries['volts3'][j];
+				myname[8][j]  = "3,3V sensors number "+j.toString();
 				}
 			if(myseries['volts5'] !== undefined && myseries['volts5'][j] !== undefined)
 				{
-				myarray[2][j] = myseries['volts5'][j];
-				myname[2][j] = "5 volts sensor number "+j.toString();
+				myarray[9][j] = [];
+				myarray[9][j] = myseries['volts5'][j];
+				myname[9][j]  = "5 volts sensor number "+j.toString();
 				}
 			if(myseries['volts12'] !== undefined && myseries['volts12'][j] !== undefined)
 				{
-				myarray[3][j] = myseries['volts12'][j];
-				myname[3][j] = "12 volts sensor number "+j.toString();
+				myarray[10][j] = [];
+				myarray[10][j] = myseries['volts12'][j];
+				myname[10][j]  = "12 volts sensor number "+j.toString();
 				}
 			if(myseries['volts1_5'] !== undefined && myseries['volts1_5'][j] !== undefined)
 				{
-				myarray[4][j] = myseries['volts1_5'][j];
-				myname[4][j] = "1,5 volts sensor number "+j.toString();
+				myarray[11][j] = [];
+				myarray[11][j] = myseries['volts1_5'][j];
+				myname[11][j]  = "1,5 volts sensor number "+j.toString();
 				}
 			if(myseries['unknown_voltages'] !== undefined && myseries['unknown_voltages'][j] !== undefined)
 				{
-				myarray[5][j] = myseries['unknown_voltages'][j];
-				myname[5][j] = "Unknown voltage sensor number "+j.toString();
+				myarray[12][j] = [];
+				myarray[12][j] = myseries['unknown_voltages'][j];
+				myname[12][j]  = "Unknown voltage sensor number "+j.toString();
 				}
 			}
 		}
@@ -288,66 +274,290 @@ function printChart(myseries,index,monitor,nummax)
 		},
 		series: [
 			{
-			data: myarray[0][0],
-			name: myname[0][0],
+				data: myarray[0][1],
+				name: myname[0][1],
 			},
 			{
-			data: myarray[0][1],
-			name: myname[0][1],
+				data: myarray[0][2],
+				name: myname[0][2],
 			},
 			{
-			data: myarray[0][2],
-			name: myname[0][2],
+				data: myarray[0][3],
+				name: myname[0][3],
 			},
 			{
-			data: myarray[0][3],
-			name: myname[0][3],
+				data: myarray[0][4],
+				name: myname[0][4],
 			},
 			{
-			data: myarray[1][0],
-			name: myname[1][0],
+				data: myarray[0][5],
+				name: myname[0][5],
 			},
 			{
-			data: myarray[1][1],
-			name: myname[1][1],
+				data: myarray[1][1],
+				name: myname[1][1],
 			},
 			{
-			data: myarray[1][2],
-			name: myname[1][2],
+				data: myarray[1][2],
+				name: myname[1][2],
 			},
 			{
-			data: myarray[1][3],
-			name: myname[1][3],
+				data: myarray[1][3],
+				name: myname[1][3],
 			},
 			{
-			data: myarray[2][0],
-			name: myname[2][0],
+				data: myarray[1][4],
+				name: myname[1][4],
 			},
 			{
-			data: myarray[2][1],
-			name: myname[2][1],
+				data: myarray[1][5],
+				name: myname[1][5],
 			},
 			{
-			data: myarray[2][2],
-			name: myname[2][2],
+				data: myarray[2][1],
+				name: myname[2][1],
 			},
 			{
-			data: myarray[2][3],
-			name: myname[2][3],
+				data: myarray[2][2],
+				name: myname[2][2],
 			},
 			{
-			data: myarray[3][0],
-			name: myname[3][0],
+				data: myarray[2][3],
+				name: myname[2][3],
 			},
 			{
-			data: myarray[3][1],
-			name: myname[3][1],
+				data: myarray[2][4],
+				name: myname[2][4],
+			},
+			{
+				data: myarray[2][5],
+				name: myname[2][5],
+			},
+			{
+				data: myarray[3][1],
+				name: myname[3][1],
+			},
+			{
+				data: myarray[3][2],
+				name: myname[3][2],
+			},
+			{
+				data: myarray[3][3],
+				name: myname[3][3],
+			},
+			{
+				data: myarray[3][4],
+				name: myname[3][4],
+			},
+			{
+				data: myarray[3][5],
+				name: myname[3][5],
+			},
+			{
+				data: myarray[3][1],
+				name: myname[3][1],
+			},
+			{
+				data: myarray[3][2],
+				name: myname[3][2],
+			},
+			{
+				data: myarray[3][3],
+				name: myname[3][3],
+			},
+			{
+				data: myarray[3][4],
+				name: myname[3][4],
+			},
+			{
+				data: myarray[3][5],
+				name: myname[3][5],
+			},
+			{
+				data: myarray[4][1],
+				name: myname[4][1],
+			},
+			{
+				data: myarray[4][2],
+				name: myname[4][2],
+			},
+			{
+				data: myarray[4][3],
+				name: myname[4][3],
+			},
+			{
+				data: myarray[4][4],
+				name: myname[4][4],
+			},
+			{
+				data: myarray[4][5],
+				name: myname[4][5],
+			},
+			{
+				data: myarray[5][1],
+				name: myname[5][1],
+			},
+			{
+				data: myarray[5][2],
+				name: myname[5][2],
+			},
+			{
+				data: myarray[5][3],
+				name: myname[5][3],
+			},
+			{
+				data: myarray[5][4],
+				name: myname[5][4],
+			},
+			{
+				data: myarray[5][5],
+				name: myname[5][5],
+			},
+			{
+				data: myarray[6][1],
+				name: myname[6][1],
+			},
+			{
+				data: myarray[6][2],
+				name: myname[6][2],
+			},
+			{
+				data: myarray[6][3],
+				name: myname[6][3],
+			},
+			{
+				data: myarray[6][4],
+				name: myname[6][4],
+			},
+			{
+				data: myarray[6][5],
+				name: myname[6][5],
+			},
+			{
+				data: myarray[7][1],
+				name: myname[7][1],
+			},
+			{
+				data: myarray[7][2],
+				name: myname[7][2],
+			},
+			{
+				data: myarray[7][3],
+				name: myname[7][3],
+			},
+			{
+				data: myarray[7][4],
+				name: myname[7][4],
+			},
+			{
+				data: myarray[7][5],
+				name: myname[7][5],
+			},
+			{
+				data: myarray[8][1],
+				name: myname[8][1],
+			},
+			{
+				data: myarray[8][2],
+				name: myname[8][2],
+			},
+			{
+				data: myarray[8][3],
+				name: myname[8][3],
+			},
+			{
+				data: myarray[8][4],
+				name: myname[8][4],
+			},
+			{
+				data: myarray[8][5],
+				name: myname[8][5],
+			},
+			{
+				data: myarray[9][1],
+				name: myname[9][1],
+			},
+			{
+				data: myarray[9][2],
+				name: myname[9][2],
+			},
+			{
+				data: myarray[9][3],
+				name: myname[9][3],
+			},
+			{
+				data: myarray[9][4],
+				name: myname[9][4],
+			},
+			{
+				data: myarray[9][5],
+				name: myname[9][5],
+			},
+			{
+				data: myarray[10][1],
+				name: myname[10][1],
+			},
+			{
+				data: myarray[10][2],
+				name: myname[10][2],
+			},
+			{
+				data: myarray[10][3],
+				name: myname[10][3],
+			},
+			{
+				data: myarray[10][4],
+				name: myname[10][4],
+			},
+			{
+				data: myarray[10][5],
+				name: myname[10][5],
+			},
+			{
+				data: myarray[11][1],
+				name: myname[11][1],
+			},
+			{
+				data: myarray[11][2],
+				name: myname[11][2],
+			},
+			{
+				data: myarray[11][3],
+				name: myname[11][3],
+			},
+			{
+				data: myarray[11][4],
+				name: myname[11][4],
+			},
+			{
+				data: myarray[11][5],
+				name: myname[11][5],
+			},
+			{
+				data: myarray[12][1],
+				name: myname[12][1],
+			},
+			{
+				data: myarray[12][2],
+				name: myname[12][2],
+			},
+			{
+				data: myarray[12][3],
+				name: myname[12][3],
+			},
+			{
+				data: myarray[12][4],
+				name: myname[12][4],
+			},
+			{
+				data: myarray[12][5],
+				name: myname[12][5],
 			},
 		]
     });
 }
 
 
-    function isArray(obj) {
+function isArray(obj) {
         return Object.prototype.toString.call(obj) === "[object Array]";
     }
