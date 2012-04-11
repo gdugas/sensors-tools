@@ -160,97 +160,80 @@ function printChart(myseries,index,monitor,nummax)
     var j 	= 1;
     myarray = [];
     myname 	= [];
-    if(monitor == "temp")
+	for(j=1;j<=nummax;j++)
 		{
-		for(j=1;j<=nummax;j++)
+		for(var k=0;k<13;k++)
+			{ myarray[k][j] = []; }
+		if(monitor == "temp")
 			{
 			if(myseries['core_temp'] !== undefined && myseries['core_temp'][j] !== undefined)
 				{
-				myarray[0][j] = [];
 				myarray[0][j] = myseries['core_temp'][j];
 				myname[0][j]  = "Core temperature sensor number "+j.toString();
 				}
 			if(myseries['motherboard_temp'] !== undefined && myseries['motherboard_temp'][j] !== undefined)
 				{
-				myarray[1][j] = [];
 				myarray[1][j] = myseries['motherboard_temp'][j];
 				myname[1][j]  = "Motherboard temperature number "+j.toString();
 				}
 			if(myseries['unknown_devices'] !== undefined && myseries['unknown_devices'][j] != undefined)
 				{
-				myarray[2][j] = [];
 				myarray[2][j] = myseries['unknown_devices'][j];
 				myname[2][j]  = "Unknown temperature for device number "+j.toString();
 				}
 			}
-		}
-    else if (monitor == "fan")
-		{
-		for(j=1;j<=nummax;j++)
+		else if (monitor == "fan")
 			{
 			if(myseries['cpu_fans'] !== undefined && myseries['cpu_fans'][j] !== undefined)
 				{
-				myarray[3][j] = [];
 				myarray[3][j] = myseries['cpu_fans'][j];
 				myname[3][j]  = "CPU fan sensor number "+j.toString();
 				}
 			if(myseries['chassis_fans'] !== undefined && myseries['chassis_fans'][j] !== undefined)
 				{
-				myarray[4][j] = [];
 				myarray[4][j] = myseries['chassis_fans'][j];
 				myname[4][j]  = "Chassis fan sensor number "+j.toString();
 				}
 			if(myseries['motherboard_fans'] !== undefined && myseries['motherboard_fans'][j] !== undefined)
 				{
-				myarray[5][j] = [];
 				myarray[5][j] = myseries['motherboard_fans'][j];
 				myname[5][j]  = "Motherboard fan sensor number "+j.toString();
 				}
 			if(myseries['unknown_fans'] !== undefined && myseries['unknown_fans'][j] !== undefined)
 				{
-				myarray[6][j] = [];
 				myarray[6][j] = myseries['unknown_fans'][j];
 				myname[6][j]  = "Unknown fan for sensor number "+j.toString();
 				}
 			}
-		}
-    else if (monitor == "volt")
-		{
-		for(j=1;j<=nummax;j++)
+		else if (monitor == "volt")
 			{
 			if(myseries['vcore'] !== undefined && myseries['vcore'][j] !== undefined)
 				{
-				myarray[7][j] = [];
 				myarray[7][j] = myseries['vcore'][j];
 				myname[7][j]  = "VCore sensor number "+j.toString();
 				}
 			if(myseries['volts3'] !== undefined && myseries['volts3'][j] !== undefined)
 				{
-				myarray[8][j] = [];
 				myarray[8][j] = myseries['volts3'][j];
 				myname[8][j]  = "3,3V sensors number "+j.toString();
 				}
 			if(myseries['volts5'] !== undefined && myseries['volts5'][j] !== undefined)
 				{
-				myarray[9][j] = [];
 				myarray[9][j] = myseries['volts5'][j];
 				myname[9][j]  = "5 volts sensor number "+j.toString();
 				}
 			if(myseries['volts12'] !== undefined && myseries['volts12'][j] !== undefined)
 				{
-				myarray[10][j] = [];
 				myarray[10][j] = myseries['volts12'][j];
 				myname[10][j]  = "12 volts sensor number "+j.toString();
 				}
 			if(myseries['volts1_5'] !== undefined && myseries['volts1_5'][j] !== undefined)
 				{
-				myarray[11][j] = [];
 				myarray[11][j] = myseries['volts1_5'][j];
 				myname[11][j]  = "1,5 volts sensor number "+j.toString();
 				}
 			if(myseries['unknown_voltages'] !== undefined && myseries['unknown_voltages'][j] !== undefined)
 				{
-				myarray[12][j] = [];
 				myarray[12][j] = myseries['unknown_voltages'][j];
 				myname[12][j]  = "Unknown voltage sensor number "+j.toString();
 				}
