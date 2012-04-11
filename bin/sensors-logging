@@ -18,33 +18,36 @@ if not os.path.exists(sensorsConf.DB_name):
 
 dom = parseString(sensors.output.Xml())
 
+values = {}
+
+values['date'] 	= []
+values['dev'] 	= []
+values['num'] 	= []
+values['type'] 	= []
+values['value'] = []
 
 temps = dom.getElementsByTagName("temperatures")[0]
 for temp in temps.getElementsByTagName("temperature"):
-	values = {}
-	values['date']		= now
-	values['dev']		= temp.getAttribute('name')
-	values['num']		= temp.getAttribute('num')
-	values['type']		= 'temp'
-	values['value']		= temp.getAttribute('value')
-	sensors.db.insert(values)
+	values['date'].append(now)
+	values['dev'].append(temp.getAttribute('name'))
+	values['num'].append(temp.getAttribute('num'))
+	values['type'].append('temp')
+	values['value'].append(temp.getAttribute('value'))
 
 fans	= dom.getElementsByTagName("fans")[0]
 for fan in fans.getElementsByTagName("fan"):
-	values = {}
-	values['date']		= now
-	values['dev']		= fan.getAttribute('name')
-	values['num']		= fan.getAttribute('num')
-	values['type']		= 'fan'
-	values['value']		= fan.getAttribute('value')
-	sensors.db.insert(values)
+	values['date'].append(now)
+	values['dev'].append(fan.getAttribute('name'))
+	values['num'].append(fan.getAttribute('num'))
+	values['type'].append('fan')
+	values['value'].append(fan.getAttribute('value'))
 
 volts	= dom.getElementsByTagName("voltages")[0]
-for fan in fans.getElementsByTagName("voltage"):
-	values = {}
-	values['date']		= now
-	values['dev']		= fan.getAttribute('name')
-	values['num']		= fan.getAttribute('num')
-	values['type']		= 'volt'
-	values['value']		= fan.getAttribute('value')
-	sensors.db.insert(values)
+for volt in volts.getElementsByTagName("voltage"):
+	values['date'].append(now)
+	values['dev'].append(volt.getAttribute('name'))
+	values['num'].append(volt.getAttribute('num'))
+	values['type'].append('volt')
+	values['value'].append(volt.getAttribute('value'))
+
+sensors.db.insert(values)
