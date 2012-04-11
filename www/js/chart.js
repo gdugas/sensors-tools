@@ -118,25 +118,25 @@ function refreshChart(getData, data, monitor) {
 			nummax = num;
 			if(monitor == "temp")
 				{
-				myseries['core_temp'][num] = [];
-				myseries['motherboard_temp'][num] = [];
-				myseries['unknown_devices'][num] = [];
+				myseries['core_temp'][num] 			= [];
+				myseries['motherboard_temp'][num] 	= [];
+				myseries['unknown_devices'][num] 	= [];
 				}
 			else if (monitor == "fan")
 				{
-				myseries['cpu_fans'][num] = [];
-				myseries['chassis_fans'][num] = [];
-				myseries['motherboard_fans'][num] = [];
-				myseries['unknown_fans'][num] = [];
+				myseries['cpu_fans'][num] 			= [];
+				myseries['chassis_fans'][num] 		= [];
+				myseries['motherboard_fans'][num] 	= [];
+				myseries['unknown_fans'][num] 		= [];
 				}
 			else if (monitor == "volt")
 				{
-				myseries['vcore'][num] = [];
-				myseries['volts3'][num] = [];
-				myseries['volts5'][num] = [];
-				myseries['volts12'][num] = [];
-				myseries['volts1_5'][num] = [];
-				myseries['unknown_voltages'][num] = [];
+				myseries['vcore'][num] 				= [];
+				myseries['volts3'][num] 			= [];
+				myseries['volts5'][num] 			= [];
+				myseries['volts12'][num] 			= [];
+				myseries['volts1_5'][num] 			= [];
+				myseries['unknown_voltages'][num] 	= [];
 				}
 			}
     if( $(this).attr('type') == monitor ) {
@@ -559,5 +559,5 @@ function printChart(myseries,index,monitor,nummax)
 
 
 function isArray(obj) {
-        return Object.prototype.toString.call(obj) === "[object Array]";
-    }
+	return Object.prototype.toString.call(obj) === "[object Array]";
+}
