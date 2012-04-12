@@ -1,6 +1,6 @@
 [REQUIREMENTS]
-linux file system with cron service and apache server (or other web server)
-lm-sensors
+linux file system with cron service, apache server (or other web server),
+lm-sensors, php, sqlite3, python >= 2.6
 
 After the install of lm-sensors, launch "sensors-detect" command and
 answer to all question.
@@ -22,9 +22,9 @@ First launch install.py python script in root with
     
     # python install.py
     
-    or
-    
-    $ sudo python install.py
+or
+   
+$ sudo python install.py
 
 You have to create a symlinks in your www directory to map to the www 
 subdirectory of sensor-tools here.
