@@ -1,3 +1,6 @@
+
+//global var initialization
+
 var chart;
 var dates;
 
@@ -74,17 +77,23 @@ function loadChart( getData ) {
 
 function parseAttr(monitor,index,num,attr,value)
 	{
-	if(monitor == "temp")
+	if(monitor == "temp_core")
 		{
 		if( attr == 'core')
 			{
 			myseries['core_temp'][num][index] = parseInt(value);
 			}
-		else if(attr == 'motherboard')
+		}
+	else if(monitor == "temp_mb")
+		{	
+		if(attr == 'motherboard')
 			{
 			myseries['motherboard_temp'][num][index] = parseInt(value);
 			}
-		else if(attr == 'unknown_device')
+		}
+	else if(monitor == "temp_others")
+		{
+		if(attr == 'unknown_device')
 			{
 			myseries['unknown_devices'][num][index] = parseInt(value);
 			}
@@ -137,6 +146,7 @@ function parseAttr(monitor,index,num,attr,value)
 		}
 	}
 
+//main function
 function refreshChart(getData, data, monitor) {
 	
 	var index		= 0;
@@ -170,11 +180,20 @@ function refreshChart(getData, data, monitor) {
 		if(num > nummax)
 			{
 			nummax = num;
-			if(monitor == "temp")
-				{
-				myseries['core_temp'][num] 			= [];
-				myseries['motherboard_temp'][num] 	= [];
-				myseries['unknown_devices'][num] 	= [];
+			if(monitor == "temp_core")
+				{ 
+					monitortype = "temp";
+					myseries['core_temp'][num] 			= []; 
+				}
+			else if(monitor == "temp_mb")
+				{ 
+					monitortype = "temp";
+					myseries['motherboard_temp'][num] 	= []; 
+				}
+			else if(monitor == "temp_others")
+				{ 
+					monitortype = "temp";
+					myseries['unknown_devices'][num] 		= []; 
 				}
 			else if (monitor == "fan")
 				{
@@ -195,10 +214,8 @@ function refreshChart(getData, data, monitor) {
 			}
 		
 		
-		if( $(this).attr('type') == monitor ) {
-			
+		if( $(this).attr('type') == monitortype ) {
 			var date = parseInt( $(this).attr('date') );
-			
 			if(  date - lastdate >= step ) {
 				lastdate = date;
 				dates.push = date;
@@ -206,12 +223,9 @@ function refreshChart(getData, data, monitor) {
 			}
 			
 			if( date - lastdate == 0 ) 
-				{
-				parseAttr(monitor,index,num,$(this).attr('periph'),$(this).attr('value'));
-				}
+				{ parseAttr(monitor,index,num,$(this).attr('periph'),$(this).attr('value')); }
 		}
 	});
-	
 	assignChart(myseries,index,monitor,nummax);	
 	printChart(myarray,myname,index,monitor);	
 }
@@ -222,18 +236,24 @@ function assignChart(myseries,index,monitor,nummax)
 
 	for(j=1;j<=nummax;j++)
 		{
-		if(monitor == "temp")
+		if(monitor == "temp_core")
 			{
 			if(myseries['core_temp'] !== undefined && myseries['core_temp'][j] !== undefined)
 				{
 				myarray[1][j]	= myseries['core_temp'][j];
 				myname[1][j] 	= "Core temperature sensor number "+j.toString();
 				}
+			}
+		if(monitor == "temp_mb")
+			{
 			if(myseries['motherboard_temp'] !== undefined && myseries['motherboard_temp'][j] !== undefined)
 				{
 				myarray[2][j]	= myseries['motherboard_temp'][j];
 				myname[2][j] 	= "Motherboard temperature number "+j.toString();
 				}
+			}
+		if(monitor == "temp_others")
+			{
 			if(myseries['unknown_devices'] !== undefined && myseries['unknown_devices'][j] != undefined)
 				{
 				myarray[3][j]	= myseries['unknown_devices'][j];
@@ -301,9 +321,12 @@ function assignChart(myseries,index,monitor,nummax)
 	
 function printChart(myarray,myname,index,monitor)
 	{
-	if (monitor == "temp")
+	if (monitor == "temp_core")
 		{
-		if(myarray[1][1].length != 0)
+		if(myarray[1][1].length == 0 && myarray[1][2].length == 0 && myarray[1][3].length == 0 && myarray[1][4].length == 0)
+			{ //document.write("No data for core temperature");
+			}
+		else
 			{
 			//create core temp chart for 4 core.
 			chart = new Highcharts.Chart({
@@ -342,8 +365,13 @@ function printChart(myarray,myname,index,monitor)
 					]
 				});
 			}
+		}
 		//motherboard temp sensors
-		if(myarray[2][1].length != 0)
+	else if (monitor == "temp_mb")
+		{
+		if(myarray[2][1].length == 0 && myarray[2][2].length == 0 && myarray[2][3].length == 0 && myarray[2][4].length == 0)
+			{ document.write("No data for motherboard temperature"); }
+		else
 			{
 			chart = new Highcharts.Chart({
 				chart: {
@@ -377,8 +405,13 @@ function printChart(myarray,myname,index,monitor)
 					]
 				});
 			}
+		}
 		//other temp sensors ?
-		if(myarray[3][1].length != 0)
+	else if (monitor == "temp_others")
+		{
+		if(myarray[3][1].length == 0 && myarray[3][2].length == 0 && myarray[3][3].length == 0 && myarray[3][4].length == 0)
+			{ document.write("No data for other device temperature"); }
+		else
 			{
 			chart = new Highcharts.Chart({
 				chart: {
