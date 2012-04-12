@@ -25,7 +25,26 @@ myseries['volts5']			= new Array();
 myseries['volts12']			= new Array();
 myseries['volts1_5']		= new Array();
 myseries['unknown_voltages']= new Array();
-	
+
+var j = 1;
+var k = 1;
+
+//buffer tabs
+myarray = 	[];
+myname 	= 	[];
+
+for(k=1;k<=13;k++)
+	{
+	myarray[k] = new Array();
+	myname[k]  = new Array();
+	for(j=1;j<=5;j++)
+		{
+		myarray[k][j] = new Array();
+		myname[k][j]  = new Array(); 
+		}
+	}
+
+
 function loadChart( getData ) {
 	$('#chart').text('Loading ...');
 	var string = "";
@@ -192,28 +211,15 @@ function refreshChart(getData, data, monitor) {
 				}
 		}
 	});
-	printChart(myseries,index,monitor,nummax);	
+	
+	assignChart(myseries,index,monitor,nummax);	
+	printChart(myarray,myname,index,monitor);	
 }
 
 	
-function printChart(myseries,index,monitor,nummax)
+function assignChart(myseries,index,monitor,nummax)
 	{
-	var j = 1;
-	var k = 1;
-	
-	myarray = 	[];
-	myname 	= 	[];
-	
-	for(k=1;k<=13;k++)
-		{
-		myarray[k] = new Array();
-		myname[k]  = new Array();
-		for(j=1;j<=5;j++)
-			{
-			myarray[k][j] = new Array();
-			myname[k][j]  = new Array(); 
-			}
-		}
+
 	for(j=1;j<=nummax;j++)
 		{
 		if(monitor == "temp")
@@ -291,62 +297,118 @@ function printChart(myseries,index,monitor,nummax)
 				}
 			}
 		}
-		
-	chart = new Highcharts.Chart({
-		chart: {
-			renderTo: 'chart',
-			defaultSeriesType: 'line'
-		},
-		title: {
-			text: window.location.hostname +' Sensors History'
-		},
-		xAxis: {
-			categories: dates
-		},
-		yAxis: {
-			title: {
-				text: 'Temperature(Celcius degree)/voltage(V)/fans(RPM)'
+}
+	
+function printChart(myarray,myname,index,monitor)
+	{
+	if (monitor == "temp")
+		{
+		if(myarray[1][1].length != 0)
+			{
+			//create core temp chart for 4 core.
+			chart = new Highcharts.Chart({
+				chart: {
+					renderTo: 'chart',
+					defaultSeriesType: 'line'
+				},
+				title: {
+					text: window.location.hostname +' Sensors History'
+				},
+				xAxis: {
+					categories: dates
+				},
+				yAxis: {
+					title: {
+						text: 'Temperature(Celcius degree)/voltage(V)/fans(RPM)'
+					}
+				},
+				series: [
+						{
+						data: myarray[1][1],
+						name: myname[1][1],
+						},
+						{
+						data: myarray[1][2],
+						name: myname[1][2],
+						},
+						{
+						data: myarray[1][3],
+						name: myname[1][3],
+						},
+						{
+						data: myarray[1][4],
+						name: myname[1][4],
+						},
+					]
+				});
 			}
-		},
-		series: [
+		//motherboard temp sensors
+		if(myarray[2][1].length != 0)
 			{
-			data: myarray[1][1],
-			name: myname[1][1],
-			},
+			chart = new Highcharts.Chart({
+				chart: {
+					renderTo: 'chart',
+					defaultSeriesType: 'line'
+				},
+				title: {
+					text: window.location.hostname +' Sensors History'
+				},
+				xAxis: {
+					categories: dates
+				},
+				yAxis: {
+					title: {
+						text: 'Temperature(Celcius degree)/voltage(V)/fans(RPM)'
+					}
+				},
+				series: [
+						{
+						data: myarray[2][1],
+						name: myname[2][1],
+						},
+						{
+						data: myarray[2][2],
+						name: myname[2][2],
+						},
+						{
+						data: myarray[2][3],
+						name: myname[2][3],
+						},
+					]
+				});
+			}
+		//other temp sensors ?
+		if(myarray[3][1].length != 0)
 			{
-			data: myarray[1][2],
-			name: myname[1][2],
-			},
-			{
-			data: myarray[1][3],
-			name: myname[1][3],
-			},
-			{
-			data: myarray[1][4],
-			name: myname[1][4],
-			},
-			{
-			//data: myarray[2][1],
-			//name: myname[2][1],
-			//},
-			//{
-			//data: myarray[2][2],
-			//name: myname[2][2],
-			//},
-			//{
-			//data: myarray[2][3],
-			//name: myname[2][3],
-			//},
-			//{
-			//data: myarray[2][4],
-			//name: myname[2][4],
-			//},
-			//{
-			//data: myarray[3][1],
-			//name: myname[3][1],
-			},
-		]
-	});
+			chart = new Highcharts.Chart({
+				chart: {
+					renderTo: 'chart',
+					defaultSeriesType: 'line'
+				},
+				title: {
+					text: window.location.hostname +' Sensors History'
+				},
+				xAxis: {
+					categories: dates
+				},
+				yAxis: {
+					title: {
+						text: 'Temperature(Celcius degree)/voltage(V)/fans(RPM)'
+					}
+				},
+				series: [
+						{
+						data: myarray[3][1],
+						name: myname[3][1],
+						},
+						{
+						data: myarray[3][2],
+						name: myname[3][2],
+						},
+					]
+				});
+			}
+		}
 }
 
 
