@@ -5,80 +5,19 @@
 	body { font-size: .8em; }
 </style>
 <link rel="stylesheet" type="text/css" href="js/jquery/ui-lightness/jquery-ui-1.8.11.full.css" />
-<script type="text/javascript" src="js/jquery/jquery-1.5.1.min.js" ></script>
-<script type="text/javascript" src="js/jquery/jquery-ui-1.8.11.min.js" ></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" ></script>
 <script type="text/javascript" src="js/highcharts/highcharts.js" ></script >
-<script type="text/javascript" src="js/chart.js" ></script >
+<script type="text/javascript" src="js/chart2.js" ></script >
 
 <style>
-input.selected { color: #999; }
-input.active { color: #c00; }
+	input.selected { color: #999; }
+	input.active { color: #c00; }
 </style>
 
 <script type="text/javascript" >
- 
- var activeView = "day";
- var curDate	= 0;
- var curSlide	= 0;
- function callRefresh(){
- 	var tosend = {
-			view : activeView,
-			date : parseInt($("#startdate").val())/1000 + ( $("#starthour").slider("value") ),
-		};
-	loadChart(tosend);
- }
- 
- $(document).ready( function() {
-	
-	// DatePicker (date)
-	$("#startdate").datepicker({
-		defaultDate: "+0d",
-		dateFormat: "@",
-		onSelect: function() {
-			if( curDate != $("#startdate").val() ) {
-				curDate = $("#startdate").val();
-				callRefresh();
-			}
-		}
-	}); $("#startdate").datepicker('setDate','+0d');
-	
-	// Slider (time)
-	$("#starthour").slider({
-		max: 86340,
-		step: 60,
-		create: function() { $("#timecontent").text('0h 00m'); },
-		slide: function(event, ui) {
-			var time = new Date();
-			time.setTime( (ui.value * 1000) - 3600000 );
-			$("#timecontent").text( time.getHours()+"h" + " "+ time.getMinutes()+"m"); },
-		change: function() {
-			if( curSlide != $("#starthour").slider("value") ) {
-				curSlide = $("#starthour").slider("value");
-				callRefresh();
-			}
-		}
+	$(document).ready(function(){
+		getSensors();
 	});
-	
-	// Button
-	$('#views input[value="'+activeView+'"]').addClass("active");
-	$("#views input").click(function() {
-		if( activeView != $(this).val() ) {
-		$('#views input[value="'+activeView+'"]').removeClass("active");
-		activeView = $(this).val();
-		$(this).addClass("active");
-		callRefresh();
-		}
-	});
-	
-	// Action on refresh
-	$("#refresh").click(function(){ callRefresh() });
-	
-	curDate		= $("#startdate").val();
-	curSlide	= $("#starthour").slider("value");
-	
-	callRefresh();
- });
-
 </script>
 </head>
 <body>
