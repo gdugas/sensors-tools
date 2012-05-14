@@ -1,5 +1,3 @@
-syntax: glob
-
 *.pyc
 db/history.db
 sensorsConf.py
