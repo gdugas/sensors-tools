@@ -43,7 +43,7 @@ class Sensorsd:
                         print "First treshold !"
                         message = "Temperature report: \nT = "+str(temp)+" degrees\n"
                         message = message + "Count: " + str(count)
-                        self.sendMailReport(message,"Temperature alert: \nT = "+str(temp)+" degree; count = "+str(count))
+                        self.sendMailReport(message,"Temperature alert (first trigger) ["+ str(count)+" time(s)]"
                         print "Temperature alert: "+str(temp)+" degrees, count = "+str(count)
                         print "----------------------------------------"
                     else:
@@ -91,7 +91,6 @@ class Sensorsd:
             Send email temperature report to address defined in configuration file
         """
         import sensors.output,sensors.report
-
 
         sensors.report.Mail(message,subject)
 
