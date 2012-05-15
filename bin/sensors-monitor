@@ -9,26 +9,26 @@ sys.path.append(wdir)
 from xml.dom.minidom import parseString
 import sensors.output,sensors.report,sensorsConf
 
-report	= 0
-dom		= parseString( sensors.output.Xml() )
+report  = 0
+dom     = parseString( sensors.output.Xml() )
 
 temps = dom.getElementsByTagName("temperatures")[0]
 for temp in temps.getElementsByTagName("temperature"):
-	values = {}
-	values['dev']	= temp.getAttribute('name')
-	values['num']		= temp.getAttribute('num')
-	values['type']		= 'temp'
-	values['value']		= temp.getAttribute('value')
-	if values['dev'] == sensorsConf.SENSORS_periph and \
-	values['num'] == sensorsConf.SENSORS_num:
-		if int(values['value']) >= sensorsConf.SENSORS_trigger:
-			report = 1
+    values = {}
+    values['dev']   = temp.getAttribute('name')
+    values['num']       = temp.getAttribute('num')
+    values['type']      = 'temp'
+    values['value']     = temp.getAttribute('value')
+    if values['dev'] == sensorsConf.SENSORS_periph and \
+    values['num'] == sensorsConf.SENSORS_num:
+        if int(values['value']) >= int(sensorsConf.SENSORS_trigger):
+            report = 1
 
 if report == 1:
-	textreport = "Temperature report:\n"
-	textreport = textreport + "------------\n"
-	textreport = textreport + sensorsConf.EMAIL_text
-	textreport = textreport + "\<xml>\n\<pre>\n"
-	textreport = textreport + sensors.output.Xml()
-	textreport = textreport + "</pre>\n</xml>"
-	sensors.report.Mail(textreport)
+    textreport = "Temperature report:\n"
+    textreport = textreport + "------------\n"
+    textreport = textreport + sensorsConf.EMAIL_text
+    textreport = textreport + "\<xml>\n\<pre>\n"
+    textreport = textreport + sensors.output.Xml()
+    textreport = textreport + "</pre>\n</xml>"
+    sensors.report.Mail(textreport)

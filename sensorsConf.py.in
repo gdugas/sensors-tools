@@ -2,21 +2,33 @@
 # -*- coding: utf-8 -*-
 
 # Sensors parameters
-SENSORS_path		= "{{SENSORS_PATH}}"
-SENSORS_num		= 1
-SENSORS_periph		= "motherboard"		# core | fan | motherboard,
-SENSORS_trigger		= 29
+SENSORS_path        = "{{SENSORS_PATH}}"
+SENSORS_num     = 1
+SENSORS_periph      = "motherboard"     # core | fan | motherboard,
+SENSORS_trigger     = 29                # 1st treshold
+SENSORS_trigger2    = 35                # 2nd treshold
 
 # DB parameters
-DB_engine		= "sqlite3"				# only sqlite3 is available
-DB_name			= "{{DB_PATH}}"
-DB_password		= ""
-DB_server		= ""
-DB_user			= ""
+DB_engine       = "sqlite3"             # only sqlite3 is available
+DB_name         = "{{DB_PATH}}"
+DB_password     = ""
+DB_server       = ""
+DB_user         = ""
 
 # EMAIL parameters
-EMAIL_from		= ""	# "Firstname Lastname <sender@domain.com>"
-EMAIL_to		= ""	# "Firstname Lastname <receiver@domain.com>"
-EMAIL_cc		= ""	# "cc1@domain.com, Firstname Lastname <cc2@domain.com>"
-EMAIL_subject		= "Temp report"
-EMAIL_text		= ""	# the text for your email.
+EMAIL_from      = ""    # "Firstname Lastname <sender@domain.com>"
+EMAIL_to        = ""    # "Firstname Lastname <receiver@domain.com>"
+EMAIL_cc        = ""    # "cc1@domain.com, Firstname Lastname <cc2@domain.com>"
+EMAIL_subject   = "Temp report"
+EMAIL_text      = ""    # the text for your email.
+
+# ACTIONS ON TRIGERS
+ACTION_trigger  = "mail"         # action to execute when the first treshold is reached ("mail" is default action)
+ACTION_trigger2 = "/bin/bash -c '/bin/echo \"HIGH TEMPERATURE\"' >> /var/log/messages"   # Second action to execute when the second treshold is reached
+N_triger        = ""             # number of times that you do first ACTION_trigger before doing ACTION_N_triger if it is defined (default is empty).
+ACTION_N_triger = ""             # action to execute when the first treshold has been reached ACTION_N_triger times (default is empty).
+
+# Time parameters
+LOG_time = "5" #register log value every N minutes in database (5minutes by default)
+FIRST_alert_time = "5" #check every N minutes for the 1st alert (5minutes by default). If action is mail, you will receive an email every 5 minutes.
+SECOND_alert_time = "2" #check every N minutes for the 2nd alert (2minutes by default). If action is shutdown on other computers from list, you will halt a computer every 2 minutes.

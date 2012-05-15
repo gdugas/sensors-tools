@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# SENSORS_HOME
+#
+#     SENSORS_HOME contient le chemin vers le programme à lancer
+#     La valeur par défaut est /usr/local/src/sensors-tools/
+#
+##################################################################
+# Valeurs par défaut
+
+SENSORS_HOME=/home/rem/poolmanager/sensors/google-sensors-tools
+SENSORS_PID=/var/run/sensorsd.pid
+
+
+# Test de presence du demon puis du script de verif du demon python
+test -f $SENSORS_HOME/bin/sensorsd.py  || ( echo "No sensorsd daemon found... !" && exit 0 )
+
+
+
+case $1 in
+'start')
+    if [[ $(ps aufx |grep "sensorsd" |grep -v "grep" |wc -l) = 1 ]]; then
+        echo "...sensorsd Daemon is already running !!";
+    else
+        exec $SENSORS_HOME/bin/sensorsd.py >> $SENSORS_HOME/logs/sensorsd.log  2>&1 &
+        echo "Starting sensorsd daemon..."
+        sleep 3;
+        pid=`ps aux | grep sensors | grep -v grep | grep -v init.d | awk '{print $2}'`
+        echo $pid > $SENSORS_PID;
+        echo "...ok"
+    fi;
+    ;;
+'stop')
+    echo "Stopping sensorsd daemon..."
+    kill -9 `cat $SENSORS_PID`
+    if [ -f $SENSORS_PID ];then
+        rm -f $SENSORS_PID;
+    fi;
+    echo "...ok";
+    ;;
+'restart')
+    $0 stop
+    $0 start
+    ;;
+'status')
+    if [ -f $SENSORS_PID ]
+    then
+        echo "sensorsd daemon is running: `cat $SENSORS_PID`"
+        else
+            echo "sensorsd daemon is not running"
+        fi
+    ;;
+*)
+    echo "Usage: $0 { start | stop | restart | status }"
+    exit 1
+    ;;
+esac
