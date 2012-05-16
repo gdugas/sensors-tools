@@ -34,6 +34,12 @@ for tpl in files:
     f.close()
     outp.close()
 
+with open(pwd+"/bin/sensorsd", "r") as f:
+    lines = f.readlines()
+with open(pwd+"/bin/sensorsd", "w") as f:
+    for line in lines:
+        f.write(re.sub('{{SENSORS_PATH}}', pwd, line))
+
 if not os.path.exists( pwd + '/db' ): os.mkdir( pwd + '/db' );
 if not os.path.exists( pwd + '/logs' ): os.mkdir( pwd + '/logs' );
 

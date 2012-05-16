@@ -8,7 +8,7 @@
 ##################################################################
 # Valeurs par défaut
 
-SENSORS_HOME=/home/rem/poolmanager/sensors/google-sensors-tools
+SENSORS_HOME={{SENSORS_PATH}}
 SENSORS_PID=/var/run/sensorsd.pid
 
 
