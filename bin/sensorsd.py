@@ -43,7 +43,7 @@ class Sensorsd:
                         print "First treshold !"
                         message = "Temperature report: \nT = "+str(temp)+" degrees\n"
                         message = message + "Count: " + str(count)
-                        self.sendMailReport(message,"Temperature alert (first trigger) ["+ str(count)+" time(s)]"
+                        self.sendMailReport(message,"Temperature alert (first trigger) ["+ str(count)+" time(s)]")
                         print "Temperature alert: "+str(temp)+" degrees, count = "+str(count)
                         print "----------------------------------------"
                     else:
