@@ -5,31 +5,31 @@ import os,re,subprocess,sys
 import sensorsConf
 
 def parseSensors(stdout):
-    
+
     temps       = []
     fans        = []
-    volts       = []  
-    
+    volts       = []
+
     return_content = stdout.readlines()
-    
+
     # some counters
     itemp = 0
     ifan = 0
     ivolt = 0
-    
+
     for line in return_content:
         #print '\t', line
-        
+
         TempRegExp = re.search('(\+|\-)([0-9]+\.[0-9])°C',line)
         FansRegExp = re.search('([0-9]+)\sRPM',line)
         VoltRegExp = re.search('(\+|\-)([0-9]+\.[0-9]{2})\sV',line)
-        
+
         #temperatures
         if TempRegExp:
             itemp = itemp + 1
             match = re.split(":",line)
-            
-            
+
+
             #found CPU ?
             if re.search("(CPU)|(core)|(processor)",match[0],\
             re.IGNORECASE):
@@ -41,7 +41,9 @@ def parseSensors(stdout):
             else:
                 match2 = re.search("^temp([0-9])",match[0],re.IGNORECASE)
                 if match2:
-                    temps.append(['core',match2.group(1),\
+                    #temps.append(['unknown_core',match2.group(1),\
+                    #TempRegExp.group(2)])
+                    temps.append(['core',itemp,\
                     TempRegExp.group(2)])
                 elif re.search("remote",match[0],re.IGNORECASE):
                     temps.append(['motherboard',itemp,\
@@ -49,7 +51,7 @@ def parseSensors(stdout):
                 else:
                     temps.append(['unknown_device',itemp,\
                     TempRegExp.group(2)])
-        
+
         #fans
         if FansRegExp:
             ifan = ifan + 1
@@ -71,8 +73,8 @@ def parseSensors(stdout):
                     FansRegExp.group(1)])
                 else:
                     fans.append(['unknown_fan',ifan,\
-                    FansRegExp.group(1)])    
-                    
+                    FansRegExp.group(1)])
+
         #voltages
         if VoltRegExp:
             ivolt = ivolt + 1
@@ -95,13 +97,13 @@ def parseSensors(stdout):
             else:
                 volts.append(['unknown_voltage',ivolt,VoltRegExp.\
                 group(2)])
-    
+
     return temps,fans,volts
-    
+
 def writeXml(temps,fans,volts):
     # writing xml output
     outXml  = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-    
+
     outXml  = outXml + "<monitor>\n"
     outXml  = outXml + "\t<temperatures>\n"
     for i in temps:
@@ -121,25 +123,25 @@ def writeXml(temps,fans,volts):
         str(i[1])+"\" value=\""+str(i[2])+"\" />\n"
     outXml = outXml + "\t</voltages>\n"
     outXml = outXml + "</monitor>\n"
-    
+
     return outXml
-    
+
 def Xml():
     #sensors_cmd = "/usr/bin/sensors"
     sensors_cmd = sensorsConf.SENSORS_path
     wdir        = os.path.abspath( os.path.dirname(sys.argv[0]) )
-    
+
     # Output of sensors acquisition
     process = subprocess.Popen([sensors_cmd], stdout=subprocess.PIPE)
-    
+
     sensorsOut = ''
-    
+
     temps       = []
     fans        = []
     volts       = []
-    
+
     temps,fans,volts = parseSensors(process.stdout)
-    
+
     outXml = writeXml(temps,fans,volts)
     #print outXml
     return outXml
