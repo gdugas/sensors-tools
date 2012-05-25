@@ -41,9 +41,7 @@ def parseSensors(stdout):
             else:
                 match2 = re.search("^temp([0-9])",match[0],re.IGNORECASE)
                 if match2:
-                    #temps.append(['unknown_sensor',match2.group(1),\
-                    #TempRegExp.group(2)])
-                    temps.append(['core',itemp,\
+                    temps.append(['unknown_sensor',match2.group(1),\
                     TempRegExp.group(2)])
                 elif re.search("remote",match[0],re.IGNORECASE):
                     temps.append(['motherboard',itemp,\
