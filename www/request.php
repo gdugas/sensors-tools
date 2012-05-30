@@ -57,6 +57,7 @@ if($pdo)
 	{
 	// Display
 	header('Content-type: text/xml');
+	header('Access-Control-Allow-Origin: *');
 	echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 	echo '<monitor>' . "\n";
 	foreach( $pdo->query($sql) as $row ) {
