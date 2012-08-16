@@ -26,7 +26,8 @@ EMAIL_cc         = ""    # "cc1@domain.com, Firstname Lastname <cc2@domain.com>"
 EMAIL_subject    = "Temp report"
 EMAIL_text       = ""    # the text for your email.
 
-# ACTIONS ON TRIGERS
+# ACTIONS ON TRIGGERS
+# Triggers are launched by the daemon only. Monitor in cron will try to send mail.
 ACTION_trigger  = "mail"         # action to execute when the first treshold is reached ("mail" is default action)
 ACTION_trigger2 = "/bin/bash -c 'date && /bin/echo \"TEMPERATURE ALERT FROM SENSORS\"' >> /var/log/messages"   # Second action to execute when the second treshold is reached
 N_triger        = ""             # number of times that you do first ACTION_trigger before doing ACTION_N_triger if it is defined (default is empty).
