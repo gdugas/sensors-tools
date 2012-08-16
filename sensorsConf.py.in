@@ -17,6 +17,9 @@ DB_user         = ""
 
 # EMAIL parameters
 EMAIL_relay_host = ""    # Your email smtp server
+EMAIL_relay_port = ""    # Your smtp server port
+EMAIL_username   = ""    # username to login on stmp server
+EMAIL_password   = ""    # password to login on stmp server
 EMAIL_from       = ""    # "Firstname Lastname <sender@domain.com>"
 EMAIL_to         = ""    # "Firstname Lastname <receiver@domain.com>"
 EMAIL_cc         = ""    # "cc1@domain.com, Firstname Lastname <cc2@domain.com>"
