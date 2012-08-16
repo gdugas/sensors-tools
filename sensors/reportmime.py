@@ -9,8 +9,12 @@ from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 
 def createhtmlmail (text, xml_detail):
-    """Create a mime-message that will render HTML in popular
-    MUAs, text in better ones"""
+    """
+        Text only for plain data + xml attachment for details
+        @Param the text to send
+        @Param the xml file to send
+        @Return : nothing, just send email
+    """
 
     mesg = MIMEMultipart()
 
