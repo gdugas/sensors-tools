@@ -26,6 +26,8 @@ case $1 in
         sleep 3;
         pid=`ps aux | grep sensors | grep -v grep | grep -v init.d | awk '{print $2}'`
         echo $pid > $SENSORS_PID;
+        date '+%Y%m%d %H:%M:%S' >> $SENSORS_HOME/logs/sensorsd.log
+        echo "Starting sensorsd daemon" >> $SENSORS_HOME/logs/sensorsd.log
         echo "...ok"
     fi;
     ;;
@@ -35,6 +37,8 @@ case $1 in
     if [ -f $SENSORS_PID ];then
         rm -f $SENSORS_PID;
     fi;
+    date '+%Y%m%d %H:%M:%S' >> $SENSORS_HOME/logs/sensorsd.log
+    echo "Stopping sensorsd daemon" >> $SENSORS_HOME/logs/sensorsd.log
     echo "...ok";
     ;;
 'restart')
