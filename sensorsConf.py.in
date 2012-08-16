@@ -3,8 +3,8 @@
 
 # Sensors parameters
 SENSORS_path        = "{{SENSORS_PATH}}"
-SENSORS_num     = 1
 SENSORS_periph      = "motherboard"     # core | fan | motherboard,
+SENSORS_num         = 1
 SENSORS_trigger     = 29                # 1st treshold
 SENSORS_trigger2    = 35                # 2nd treshold
 
@@ -16,11 +16,12 @@ DB_server       = ""
 DB_user         = ""
 
 # EMAIL parameters
-EMAIL_from      = ""    # "Firstname Lastname <sender@domain.com>"
-EMAIL_to        = ""    # "Firstname Lastname <receiver@domain.com>"
-EMAIL_cc        = ""    # "cc1@domain.com, Firstname Lastname <cc2@domain.com>"
-EMAIL_subject   = "Temp report"
-EMAIL_text      = ""    # the text for your email.
+EMAIL_relay_host = ""    # Your email smtp server
+EMAIL_from       = ""    # "Firstname Lastname <sender@domain.com>"
+EMAIL_to         = ""    # "Firstname Lastname <receiver@domain.com>"
+EMAIL_cc         = ""    # "cc1@domain.com, Firstname Lastname <cc2@domain.com>"
+EMAIL_subject    = "Temp report"
+EMAIL_text       = ""    # the text for your email.
 
 # ACTIONS ON TRIGERS
 ACTION_trigger  = "mail"         # action to execute when the first treshold is reached ("mail" is default action)
