@@ -21,7 +21,7 @@ for temp in temps.getElementsByTagName("temperature"):
     values['type']      = 'temp'
     values['value']     = temp.getAttribute('value')
     if values['dev'] == sensorsConf.SENSORS_periph and \
-    values['num'] == sensorsConf.SENSORS_num:
+    int(values['num']) == sensorsConf.SENSORS_num:
         if int(float(values['value'])) >= int(sensorsConf.SENSORS_trigger):
             report = 1
 
