@@ -12,8 +12,8 @@ import sensors.output,sensors.report,sensorsConf
 
 report  = 0
 dom     = parseString( sensors.output.Xml() )
+temps   = dom.getElementsByTagName("temperatures")[0]
 
-temps = dom.getElementsByTagName("temperatures")[0]
 for temp in temps.getElementsByTagName("temperature"):
     values = {}
     values['dev']       = temp.getAttribute('name')
@@ -22,11 +22,11 @@ for temp in temps.getElementsByTagName("temperature"):
     values['value']     = temp.getAttribute('value')
     if values['dev'] == sensorsConf.SENSORS_periph and \
     values['num'] == sensorsConf.SENSORS_num:
-        if int(values['value']) >= int(sensorsConf.SENSORS_trigger):
+        if int(float(values['value'])) >= int(sensorsConf.SENSORS_trigger):
             report = 1
 
 if report == 1:
-    textreport = "Temperature report:\n"
+    textreport = "Sensors report:\n"
     textreport = textreport + "------------\n"
     textreport = textreport + sensorsConf.EMAIL_text
     textreport = textreport + "\<xml>\n\<pre>\n"

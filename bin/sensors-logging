@@ -28,7 +28,10 @@ values['num']   = []
 values['type']  = []
 values['value'] = []
 
-temps = dom.getElementsByTagName("temperatures")[0]
+temps   = dom.getElementsByTagName("temperatures")[0]
+fans    = dom.getElementsByTagName("fans")[0]
+volts   = dom.getElementsByTagName("voltages")[0]
+
 for temp in temps.getElementsByTagName("temperature"):
     values['date'].append(now)
     values['dev'].append(temp.getAttribute('name'))
@@ -36,7 +39,6 @@ for temp in temps.getElementsByTagName("temperature"):
     values['type'].append('temp')
     values['value'].append(temp.getAttribute('value'))
 
-fans    = dom.getElementsByTagName("fans")[0]
 for fan in fans.getElementsByTagName("fan"):
     values['date'].append(now)
     values['dev'].append(fan.getAttribute('name'))
@@ -44,7 +46,6 @@ for fan in fans.getElementsByTagName("fan"):
     values['type'].append('fan')
     values['value'].append(fan.getAttribute('value'))
 
-volts   = dom.getElementsByTagName("voltages")[0]
 for volt in volts.getElementsByTagName("voltage"):
     values['date'].append(now)
     values['dev'].append(volt.getAttribute('name'))
