@@ -2,17 +2,16 @@
 
 # SENSORS_HOME
 #
-#     SENSORS_HOME contient le chemin vers le programme à lancer
-#     La valeur par défaut est /usr/local/src/sensors-tools/
+#     SENSORS_HOME contain the path to the executable
+#     Default is /usr/local/src/sensors-tools/
 #
 ##################################################################
-# Valeurs par défaut
 
 SENSORS_HOME={{SENSORS_PATH}}
 SENSORS_PID=/var/run/sensorsd.pid
 
 
-# Test de presence du demon puis du script de verif du demon python
+# Test if the daemon and the checking script exists
 test -f $SENSORS_HOME/bin/sensorsd.py  || ( echo "No sensorsd daemon found... !" && exit 0 )
 
 

@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os,re,subprocess,sys
+import os
+import re
+import subprocess
+import sys
 import sensorsConf
 
 def parseSensors(stdout):
@@ -144,9 +147,11 @@ def Xml():
     #print outXml
     return outXml
 
-### for standalone test uncomment the following and sensors_cmd binary path
-### and comment "import sensorsConf" at the beginning
-### ...then comment "return outXml" and uncomment "print outXml" above
+### for standalone test, uncomment the following
+### and eventually sensors_cmd binary path
+### Then comment "import sensorsConf" at the beginning
+### "return outXml", and uncomment "print outXml" above
+### Otherwise, just run python [SENSORS_INSTALL_DIR]/bin/sensors-xml
 #def main():
     #Xml()
 

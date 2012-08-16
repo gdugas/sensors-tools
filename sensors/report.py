@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sensorsConf,smtplib
+import smtplib
+import sensorsConf
 from email.MIMEText import MIMEText
 
 def Mail( text,subject=None ):
@@ -13,7 +14,11 @@ def Mail( text,subject=None ):
         mail['Subject'] = subject
     mail['To'] = sensorsConf.EMAIL_to
     mail['Cc'] = sensorsConf.EMAIL_cc
-    smtp = smtplib.SMTP()
+    if (sensorsConf.EMAIL_relay_host) == "":
+        smtp = smtplib.SMTP()
+    else:
+        smtp = smtplib.SMTP(sensorsConf.EMAIL_relay_host)
+
     smtp.connect()
     if sensorsConf.EMAIL_cc == "":
         smtp.sendmail(sensorsConf.EMAIL_from, sensorsConf.EMAIL_to.split(','), mail.as_string())

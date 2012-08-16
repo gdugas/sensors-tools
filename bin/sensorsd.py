@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
@@ -24,7 +24,7 @@ class Sensorsd:
         import time
         import sensorsConf
 
-        checkcycle  = int(sensorsConf.LOG_time) * 60 # convert in seconds
+        checkcycle  = int(sensorsConf.LOG_time) * 60 #convert in seconds
         timeout     = checkcycle
         count       = 0
         count2      = 0

@@ -1,7 +1,11 @@
-#! /usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os,re,sys,subprocess,time
+import os
+import re
+import sys
+import subprocess
+import time
 
 wdir = os.path.abspath( os.path.dirname(sys.argv[0]) )
 sys.path.append(wdir)
@@ -16,7 +20,8 @@ for path in os.environ['PATH'].split(':'):
 
 if sensors_path == '':
     print "Error: unable to find `sensors` program\n\
-    Please install it first (lm-sensors or lm_sensors)."
+    Please install it first (lm-sensors or lm_sensors)\n\
+    and run sensors-detect."
     quit()
 
 files = []
@@ -60,14 +65,16 @@ with open("/etc/cron.d/sensors-tools", "w") as myfile:
     myfile.write("*/"+log_time+" * * * * root "+pwd + "/bin/sensors-logging\n")
     myfile.write("*/"+report_time+" * * * * root "+pwd + "/bin/sensors-monitor\n")
 
-cron_path = ""
+cron_daemon_path = ""
 daemon_path = "/etc/init.d"
 if os.path.exists(daemon_path + '/cron'):
-    cron_path = daemon_path + '/cron'
+    cron_daemon_path = daemon_path + '/cron'
 elif os.path.exists(daemon_path + '/crond'):
-    cron_path = daemon_path + '/crond'
+    cron_daemon_path = daemon_path + '/crond'
 
-print cron_path
+print cron_daemon_path
+print "Copying sensorsd daemon to /etc/init.d/"
 subprocess.call("cp "+pwd + "/bin/sensorsd /etc/init.d/", shell=True)
-subprocess.call(cron_path+" reload", shell=True)
+subprocess.call(cron_daemon_path+" reload", shell=True)
+print "Starting sensorsd daemon..."
 subprocess.call("service sensorsd start", shell=True)
