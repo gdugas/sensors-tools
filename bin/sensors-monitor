@@ -39,4 +39,4 @@ if report == 1:
     textreport = textreport + "\n" + description
     xml_detail = sensors.output.Xml()
     #sensors.report.Mail(textreport)
-    sensors.reportmime.Mail(textreport,xml_detail)
+    sensors.reportmime.createhtmlmail(textreport,xml_detail)
