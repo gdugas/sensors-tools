@@ -2,75 +2,46 @@
 # -*- coding: utf-8 -*-
 
 import sensorsConf
-import MimeWriter
-import mimetools
-import cStringIO
 import smtplib
+from email.MIMEBase import MIMEBase
+from email import Encoders
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
 
 def createhtmlmail (text, xml_detail):
     """Create a mime-message that will render HTML in popular
     MUAs, text in better ones"""
 
-    html = "<body><p><pre>" + text + "</p></pre>\n" + xml_detail + \
-    "</body>"
-    fromEmail = sensorsConf.EMAIL_from
-    subject = sensorsConf.EMAIL_subject
+    mesg = MIMEMultipart()
 
-    out = cStringIO.StringIO() # output buffer for our message
-    htmlin = cStringIO.StringIO(html)
-    txtin = cStringIO.StringIO(text)
+    mesg['From'] = sensorsConf.EMAIL_from
+    mesg['Subject'] = sensorsConf.EMAIL_subject
+    mesg['To'] = sensorsConf.EMAIL_to
+    mesg['Cc'] = sensorsConf.EMAIL_cc
+    mesg.attach( MIMEText(text) )
 
-    writer = MimeWriter.MimeWriter(out)
-    #
-    # set up some basic headers... we put subject here
-    # because smtplib.sendmail expects it to be in the
-    # message body
-    #
-    writer.addheader("From", fromEmail)
-    writer.addheader("Subject", subject)
-    writer.addheader("MIME-Version", "1.0")
-    #
-    # start the multipart section of the message
-    # multipart/alternative seems to work better
-    # on some MUAs than multipart/mixed
-    #
-    writer.startmultipartbody("alternative")
-    writer.flushheaders()
-    #
-    # the plain text section
-    #
-    subpart = writer.nextpart()
-    subpart.addheader("Content-Transfer-Encoding", "quoted-printable")
-    pout = subpart.startbody("text/plain", [("charset", 'utf-8')])
-    mimetools.encode(txtin, pout, 'quoted-printable')
-    txtin.close()
-    #
-    # start the html subpart of the message
-    #
-    subpart = writer.nextpart()
-    subpart.addheader("Content-Transfer-Encoding", "quoted-printable")
-    #
-    # returns us a file-ish object we can write to
-    #
-    pout = subpart.startbody("text/html", [("charset", 'utf-8')])
-    mimetools.encode(htmlin, pout, 'quoted-printable')
-    htmlin.close()
-    #
-    # Now that we're done, close our writer and
-    # return the message body
-    #
-    writer.lastpart()
-    msg = out.getvalue()
-    out.close()
+    # attach xml_detail
+    part = MIMEBase('application', "octet-stream")
+    part.set_payload( xml_detail )
+    Encoders.encode_base64(part)
+    part.add_header('Content-Disposition', \
+    'attachment; filename="xml_detail"')
+
+    mesg.attach(part)
 
     if (sensorsConf.EMAIL_relay_host) == "":
         server = smtplib.SMTP()
     else:
-        server = smtplib.SMTP(sensorsConf.EMAIL_relay_host)
-        #server = smtplib.SMTP(sensorsConf.EMAIL_relay_host, sensorsConf.EMAIL_relay_port)
-
-    #server.login('username', 'password')
-    #msg = ("From: %s\r\nTo: %s\r\n\r\n"
-       #% (fromaddr, ", ".join(toaddrs)))
-    server.sendmail(sensorsConf.EMAIL_from, sensorsConf.EMAIL_to.split(',') + sensorsConf.EMAIL_cc.split(','), msg)
+        if (sensorsConf.EMAIL_relay_port) == "":
+            server = smtplib.SMTP(sensorsConf.EMAIL_relay_host)
+        else:
+            server = smtplib.SMTP(sensorsConf.EMAIL_relay_host, \
+            sensorsConf.EMAIL_relay_port)
+    username = sensorsConf.EMAIL_username
+    password = sensorsConf.EMAIL_password
+    if (username != "" and password != ""):
+        server.login(username, password)
+    server.sendmail(sensorsConf.EMAIL_from, \
+    sensorsConf.EMAIL_to.split(',') + sensorsConf.EMAIL_cc.split(','), \
+    mesg.as_string() )
     server.quit()

@@ -13,6 +13,7 @@ import sensors.output,sensors.reportmime,sensorsConf
 report      = 0
 description = ""
 textreport  = ""
+details     = ""
 dom         = parseString( sensors.output.Xml() )
 temps       = dom.getElementsByTagName("temperatures")[0]
 
@@ -26,9 +27,9 @@ for temp in temps.getElementsByTagName("temperature"):
     int(values['num']) == sensorsConf.SENSORS_num:
         if int(float(values['value'])) >= int(sensorsConf.SENSORS_trigger):
             report = 1
-            description = "\nDevice :"+ str(values['dev'])
-            description = description + "\nNumber :" + str(values['num'])
-            description = description + "\nValue :" + str(values['value'])
+            description = "\nDevice : "+ str(values['dev'])
+            description = description + "\nNumber : " + str(values['num'])
+            description = description + "\nValue : " + str(values['value'])
             description = description + " > " + \
             str(sensorsConf.SENSORS_trigger)
 
