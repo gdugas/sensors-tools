@@ -43,4 +43,4 @@ if sensorsConf.ACTION_monitor == "mail":
         subject=None)
 else:
     if sensorsConf.ACTION_monitor != "":
-        subprocess.call(str(sensorsConf.MONITOR_action),shell=True)
+        subprocess.call(str(sensorsConf.ACTION_monitor),shell=True)
