@@ -8,18 +8,24 @@ from email import Encoders
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 
-def createhtmlmail (text, xml_detail):
+def createhtmlmail (text, xml_detail, subject):
     """
         Text only for plain data + xml attachment for details
-        @Param the text to send
-        @Param the xml file to send
+        @Param: the text to send
+        @Param: the xml file to send
+        @Param: subject to send
         @Return : nothing, just send email
     """
 
     mesg = MIMEMultipart()
 
     mesg['From'] = sensorsConf.EMAIL_from
-    mesg['Subject'] = sensorsConf.EMAIL_subject
+    if sensorsConf.EMAIL_subject != "":
+        mesg['Subject'] = sensorsConf.EMAIL_subject
+    elif subject is not None:
+        mesg['subject'] = subject
+    else:
+        mesg['subject'] = "Message from sensors-tools"
     mesg['To'] = sensorsConf.EMAIL_to
     mesg['Cc'] = sensorsConf.EMAIL_cc
     mesg.attach( MIMEText(text) )

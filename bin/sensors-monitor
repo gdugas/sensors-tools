@@ -16,7 +16,6 @@ textreport  = ""
 details     = ""
 dom         = parseString( sensors.output.Xml() )
 temps       = dom.getElementsByTagName("temperatures")[0]
-
 for temp in temps.getElementsByTagName("temperature"):
     values = {}
     values['dev']       = temp.getAttribute('name')
@@ -28,16 +27,20 @@ for temp in temps.getElementsByTagName("temperature"):
         if int(float(values['value'])) >= int(sensorsConf.SENSORS_trigger):
             report = 1
             description = "\nDevice : "+ str(values['dev'])
-            description = description + "\nNumber : " + str(values['num'])
-            description = description + "\nValue : " + str(values['value'])
+            description = description+"\nNumber : "+str(values['num'])
+            description = description+"\nValue : "+str(values['value'])
             description = description + " > " + \
             str(sensorsConf.SENSORS_trigger)
 
-if report == 1:
-    textreport = "Sensors report:\n"
-    textreport = textreport + "------------\n"
-    textreport = textreport + sensorsConf.EMAIL_text
-    textreport = textreport + "\n" + description
-    xml_detail = sensors.output.Xml()
-    #sensors.report.Mail(textreport)
-    sensors.reportmime.createhtmlmail(textreport,xml_detail)
+if sensorsConf.ACTION_monitor == "mail":
+    if report == 1:
+        textreport = "Sensors report:\n"
+        textreport = textreport + "------------\n"
+        textreport = textreport + sensorsConf.EMAIL_text
+        textreport = textreport + "\n" + description
+        xml_detail = sensors.output.Xml()
+        sensors.reportmime.createhtmlmail(textreport,xml_detail,\
+        subject=None)
+else:
+    if sensorsConf.ACTION_monitor != "":
+        subprocess.call(str(sensorsConf.MONITOR_action),shell=True)

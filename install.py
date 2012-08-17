@@ -20,13 +20,14 @@ for path in os.environ['PATH'].split(':'):
 
 if sensors_path == '':
     print "Error: unable to find `sensors` program\n\
-    Please install it first (lm-sensors or lm_sensors)\n\
-    and run sensors-detect."
+Please install it first (lm-sensors or lm_sensors)\n\
+and run sensors-detect."
     quit()
 
 files = []
 for f in os.listdir(pwd):
-    if os.path.isfile(pwd + '/' + f) and len(f) > 3 and f[len(f)-3:] == '.in':
+    if os.path.isfile(pwd + '/' + f) and len(f) > 3 and \
+    f[len(f)-3:] == '.in':
         files.append(f)
 
 for tpl in files:
@@ -55,15 +56,17 @@ if sensorsConf.LOG_time:
     log_time = sensorsConf.LOG_time
 else:
     log_time = "5"
-if sensorsConf.FIRST_alert_time:
-    report_time = sensorsConf.FIRST_alert_time
+if sensorsConf.REPORT_time:
+    report_time = sensorsConf.REPORT_time
 else:
     report_time = "5"
 
 with open("/etc/cron.d/sensors-tools", "w") as myfile:
     #every 5 minutes monitor in a cron file...
-    myfile.write("*/"+log_time+" * * * * root "+pwd + "/bin/sensors-logging\n")
-    myfile.write("*/"+report_time+" * * * * root "+pwd + "/bin/sensors-monitor\n")
+    myfile.write("*/"+log_time+" * * * * root "+pwd + \
+    "/bin/sensors-logging\n")
+    myfile.write("*/"+report_time+" * * * * root "+pwd + \
+    "/bin/sensors-monitor\n")
 
 cron_daemon_path = ""
 daemon_path = "/etc/init.d"

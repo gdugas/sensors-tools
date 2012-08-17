@@ -18,8 +18,13 @@ class Sensorsd:
     def execute(self):
         """
         Check temperature every 5 minutes:
-            If temp >= 1st treshold < 2nd treshhold: sending email and check every 5 minutes except if the action is not "mail"
-            If temp >= 2nd treshhold: we execute the command defined in sensorsConf.py
+            If temp >= 1st treshold < 2nd treshhold:
+                - sending email and check every 5 minutes except if the
+                 action is not "mail"
+            If temp >= 2nd treshhold:
+                - we execute the command defined in sensorsConf.py
+                - disable sensors-monitor from /etc/cron(.)d/sensors-tools
+                 script and reload cron to avoid any further mail
         """
         import time
         import sensorsConf
@@ -32,43 +37,57 @@ class Sensorsd:
         while 1:
             temp = self.getTemp()
             if temp >= int(sensorsConf.SENSORS_trigger):
-                # high temperature
-                count = count + 1
-                if sensorsConf.N_triger and count >= \
-                int(sensorsConf.N_triger):
-                    subprocess.call(str(sensorsConf.ACTION_N_trigger)\
-                    ,shell=True)
-                else:
-                    if sensorsConf.ACTION_trigger == "mail":
-                        print "Alert: First treshold is reached"
-                        print str(time.time) + "---------"
-                        print "First treshold !"
-                        message = "Temperature report: \nT = "+\
-                        str(temp)+" degrees\n"
-                        message = message + "Count: " + str(count)
-                        self.sendMailReport(message,"Temperature alert \
-(first trigger) ["+ str(count)+" time(s)]")
-                        print "Temperature alert: "+str(temp)+\
-                        " degrees, count = "+str(count)
-                        print "----------------------------------------"
-                    else:
-                        subprocess.call(str(sensorsConf.ACTION_trigger)\
-                        ,shell=True)
+                now = time.strftime("%Y%m%d %H:%M:%S", time.gmtime())
 
-                timeout = int(sensorsConf.FIRST_alert_time) * 60
+                if temp >= sensorsConf.SENSORS_trigger2 and \
+                sensorsConf.ACTION_trigger2:
 
-                if temp >= sensorsConf.SENSORS_trigger2:
+                    #very high temperature
                     print "Alert: Second treshold is reached"
                     subprocess.call(str(sensorsConf.ACTION_trigger2),\
                     shell=True)
                     count2 = count2 + 1
-                    print str(time.time) + "---------"
+                    print now
+                    print "---------"
                     print "Second treshold !"
                     print "Action is "+str(sensorsConf.ACTION_trigger2)
                     print "Temperature alert: "+str(temp)+\
-                    " degrees, count = "+str(count2)
+                    " degrees, count = " + str(count2) + " time(s)"
                     print "----------------------------------------"
                     timeout = int(sensorsConf.SECOND_alert_time) * 60
+
+                else:
+
+                    # high temperature
+                    count = count + 1
+                    if sensorsConf.N_trigger and \
+                    sensorsConf.ACTION_N_trigger and count >= \
+                    int(sensorsConf.N_trigger):
+                        subprocess.call(\
+                        str(sensorsConf.ACTION_N_trigger),shell=True)
+                    else:
+                        if sensorsConf.ACTION_trigger == "mail":
+                            print "Alert: First treshold is reached"
+                            print now
+                            print "---------"
+                            print "First treshold !"
+                            message = "Temperature report: \nT = "+\
+                            str(temp)+" degrees\n"
+                            message = message + "Count : "+str(count)+\
+                            " time(s)"
+                            message = message + "\n\n" + \
+                            sensorsConf.EMAIL_text
+                            self.sendMailReport(message,"Temperature \
+alert (first trigger) ["+ str(count)+" time(s)]")
+                            print "Temperature alert: "+str(temp)+\
+                            " degrees, count = "+str(count) + " time(s)"
+                            print "------------------------------------\
+----"
+                        else:
+                            subprocess.call(\
+                            str(sensorsConf.ACTION_trigger),shell=True)
+                    timeout = int(sensorsConf.FIRST_alert_time) * 60
+
             else:
                 timeout = checkcycle
                 count = 0
@@ -96,17 +115,14 @@ class Sensorsd:
             int(values['num']) == sensorsConf.SENSORS_num:
                 return int(round(values['value']))
 
-    def sendMailReport(self,message,subject=None):
+    def sendMailReport(self,message,subject):
         """
             Send email temperature report to address defined in
             configuration file
         """
-        #import sensors.output,sensors.report
-        #sensors.report.Mail(message,subject)
-
         import sensors.output,sensors.reportmime
         xml_detail = sensors.output.Xml()
-        sensors.reportmime.createhtmlmail(message,xml_detail)
+        sensors.reportmime.createhtmlmail(message,xml_detail,subject)
 
 
 main = Sensorsd()
