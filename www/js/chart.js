@@ -391,7 +391,7 @@ function printChart(myarray,myname,time_index,monitor)
             }
         else
             {
-            document.write("No data for this sensor");
+            document.write("No data for this sensor or you do not yet configure sensorsConf.py default montoring sensor.");
             setTimeout("location.reload(true)", 5000);
             }
         }
