@@ -395,7 +395,7 @@ function printChart(myarray,myname,time_index,monitor)
         }
     else if (monitor == "temp_core")
         {
-        if(myarray[1][1].length == 0 && myarray[1][2].length == 0 && myarray[1][3].length == 0 && myarray[1][4].length == 0)
+        if(myarray[1][1].length == 0)
             {
             document.write("No data for core temperature. You will be redirected in 5sec.");
             setTimeout("location.reload(true)", 5000);
@@ -444,10 +444,10 @@ function printChart(myarray,myname,time_index,monitor)
                 });
             }
         }
-        //motherboard temp sensors
+    //motherboard temp sensors - 3 T(C) sensors
     else if (monitor == "temp_mb")
         {
-        if(myarray[2][1].length == 0 && myarray[2][2].length == 0 && myarray[2][3].length == 0 && myarray[2][4].length == 0)
+        if(myarray[2][1].length == 0)
             {
             document.write("No data for motherboard temperature. You will be redirected in 5sec.");
             setTimeout("location.reload(true)", 5000);
@@ -490,7 +490,7 @@ function printChart(myarray,myname,time_index,monitor)
         //other temp sensors ?
     else if (monitor == "temp_others")
         {
-        if(myarray[3][1].length == 0 && myarray[3][2].length == 0 && myarray[3][3].length == 0 && myarray[3][4].length == 0)
+        if(myarray[3][1].length == 0)
             {
             document.write("No data for other device temperature. You will be redirected in 5sec.");
             setTimeout("location.reload(true)", 5000);
@@ -526,16 +526,16 @@ function printChart(myarray,myname,time_index,monitor)
                 });
             }
         }
-    else if (monitor == "temp_core")
+    else if (monitor == "fans")
         {
-        if(myarray[1][1].length == 0 && myarray[1][2].length == 0 && myarray[1][3].length == 0 && myarray[1][4].length == 0)
+        if(myarray[4][1].length == 0 && myarray[5][1].length == 0 && myarray[5][2].length == 0 && myarray[6][1].length == 0 && myarray[7][1].length == 0)
             {
             document.write("No data for core temperature. You will be redirected in 5sec.");
             setTimeout("location.reload(true)", 5000);
             }
         else
             {
-            //create core temp chart for 4 core.
+            //create fan chart.
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'chart',
@@ -549,7 +549,7 @@ function printChart(myarray,myname,time_index,monitor)
                 },
                 yAxis: {
                     title: {
-                        text: 'Temperature(Celcius degree)'
+                        text: 'Fans (RPM)'
                     }
                 },
                 series: [
@@ -600,6 +600,93 @@ function printChart(myarray,myname,time_index,monitor)
                         {
                         data: myarray[7][2],
                         name: myname[7][2],
+                        },
+                    ]
+                });
+            }
+        }
+    else if (monitor == "volt")
+        {
+        if(myarray[8][1].length == 0 && myarray[9][1].length == 0 && myarray[10][1].length == 0 && myarray[11][1].length == 0 && myarray[12][1].length == 0 && myarray[13][1].length == 0)
+            {
+            document.write("No data for core temperature. You will be redirected in 5sec.");
+            setTimeout("location.reload(true)", 5000);
+            }
+        else
+            {
+            //create fan chart.
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'chart',
+                    defaultSeriesType: 'line'
+                },
+                title: {
+                    text: window.location.hostname +' Sensors History'
+                },
+                xAxis: {
+                    categories: dates
+                },
+                yAxis: {
+                    title: {
+                        text: 'Fans (RPM)'
+                    }
+                },
+                series: [
+                        {
+                        data: myarray[8][1],
+                        name: myname[8][1],
+                        },
+                        {
+                        data: myarray[8][2],
+                        name: myname[8][2],
+                        },
+                        {
+                        data: myarray[8][3],
+                        name: myname[8][3],
+                        },
+                        {
+                        data: myarray[8][4],
+                        name: myname[8][4],
+                        },
+                        {
+                        data: myarray[9][1],
+                        name: myname[9][1],
+                        },
+                        {
+                        data: myarray[9][2],
+                        name: myname[9][2],
+                        },
+                        {
+                        data: myarray[10][1],
+                        name: myname[10][1],
+                        },
+                        {
+                        data: myarray[10][2],
+                        name: myname[10][2],
+                        },
+                        {
+                        data: myarray[11][1],
+                        name: myname[11][1],
+                        },
+                        {
+                        data: myarray[11][2],
+                        name: myname[11][2],
+                        },
+                        {
+                        data: myarray[12][1],
+                        name: myname[12][1],
+                        },
+                        {
+                        data: myarray[12][2],
+                        name: myname[12][2],
+                        },
+                        {
+                        data: myarray[13][1],
+                        name: myname[13][1],
+                        },
+                        {
+                        data: myarray[13][2],
+                        name: myname[13][2],
                         },
                     ]
                 });
