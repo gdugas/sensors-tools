@@ -526,11 +526,11 @@ function printChart(myarray,myname,time_index,monitor)
                 });
             }
         }
-    else if (monitor == "fans")
+    else if (monitor == "fan")
         {
         if(myarray[4][1].length == 0 && myarray[5][1].length == 0 && myarray[5][2].length == 0 && myarray[6][1].length == 0 && myarray[7][1].length == 0)
             {
-            document.write("No data for core temperature. You will be redirected in 5sec.");
+            document.write("No data for fan rpm sensors. You will be redirected in 5sec.");
             setTimeout("location.reload(true)", 5000);
             }
         else
@@ -609,7 +609,7 @@ function printChart(myarray,myname,time_index,monitor)
         {
         if(myarray[8][1].length == 0 && myarray[9][1].length == 0 && myarray[10][1].length == 0 && myarray[11][1].length == 0 && myarray[12][1].length == 0 && myarray[13][1].length == 0)
             {
-            document.write("No data for core temperature. You will be redirected in 5sec.");
+            document.write("No data for voltage sensors. You will be redirected in 5sec.");
             setTimeout("location.reload(true)", 5000);
             }
         else
