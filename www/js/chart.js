@@ -69,7 +69,6 @@ function loadChart( getData ) {
         data: string,
         dataType: "xml",
         success: function(data){
-            var i=0;
             if(monitor == "default")
                 { refreshChart(getData,data,monitor); }
             else
@@ -522,6 +521,85 @@ function printChart(myarray,myname,time_index,monitor)
                         {
                         data: myarray[3][2],
                         name: myname[3][2],
+                        },
+                    ]
+                });
+            }
+        }
+    else if (monitor == "temp_core")
+        {
+        if(myarray[1][1].length == 0 && myarray[1][2].length == 0 && myarray[1][3].length == 0 && myarray[1][4].length == 0)
+            {
+            document.write("No data for core temperature. You will be redirected in 5sec.");
+            setTimeout("location.reload(true)", 5000);
+            }
+        else
+            {
+            //create core temp chart for 4 core.
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'chart',
+                    defaultSeriesType: 'line'
+                },
+                title: {
+                    text: window.location.hostname +' Sensors History'
+                },
+                xAxis: {
+                    categories: dates
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature(Celcius degree)'
+                    }
+                },
+                series: [
+                        {
+                        data: myarray[4][1],
+                        name: myname[4][1],
+                        },
+                        {
+                        data: myarray[4][2],
+                        name: myname[4][2],
+                        },
+                        {
+                        data: myarray[4][3],
+                        name: myname[4][3],
+                        },
+                        {
+                        data: myarray[4][4],
+                        name: myname[4][4],
+                        },
+                        {
+                        data: myarray[5][1],
+                        name: myname[5][1],
+                        },
+                        {
+                        data: myarray[5][2],
+                        name: myname[5][2],
+                        },
+                        {
+                        data: myarray[5][3],
+                        name: myname[5][3],
+                        },
+                        {
+                        data: myarray[6][1],
+                        name: myname[6][1],
+                        },
+                        {
+                        data: myarray[6][2],
+                        name: myname[6][2],
+                        },
+                        {
+                        data: myarray[6][3],
+                        name: myname[6][3],
+                        },
+                        {
+                        data: myarray[7][1],
+                        name: myname[7][1],
+                        },
+                        {
+                        data: myarray[7][2],
+                        name: myname[7][2],
                         },
                     ]
                 });
