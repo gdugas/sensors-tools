@@ -2,7 +2,7 @@
 <head>
 
 <style>
-	body { font-size: .8em; }
+    body { font-size: .8em; }
 </style>
 <link rel="stylesheet" type="text/css" href="js/jquery/ui-lightness/jquery-ui-1.8.11.full.css" />
 <script type="text/javascript" src="js/jquery/jquery-1.7.2.min.js" ></script>
@@ -16,67 +16,67 @@ input.active { color: #c00; }
 </style>
 
 <script type="text/javascript" >
- 
+
  var activeView = "day";
- var curDate	= 0;
- var curSlide	= 0;
+ var curDate    = 0;
+ var curSlide   = 0;
  function callRefresh(){
- 	var tosend = {
-			view : activeView,
-			date : parseInt($("#startdate").val())/1000 + ( $("#starthour").slider("value") ),
-		};
-	loadChart(tosend);
+    var tosend = {
+            view : activeView,
+            date : parseInt($("#startdate").val())/1000 + ( $("#starthour").slider("value") ),
+        };
+    loadChart(tosend);
  }
- 
+
  $(document).ready( function() {
-	
-	// DatePicker (date)
-	$("#startdate").datepicker({
-		defaultDate: "+0d",
-		dateFormat: "@",
-		onSelect: function() {
-			if( curDate != $("#startdate").val() ) {
-				curDate = $("#startdate").val();
-				callRefresh();
-			}
-		}
-	}); $("#startdate").datepicker('setDate','+0d');
-	
-	// Slider (time)
-	$("#starthour").slider({
-		max: 86340,
-		step: 60,
-		create: function() { $("#timecontent").text('0h 00m'); },
-		slide: function(event, ui) {
-			var time = new Date();
-			time.setTime( (ui.value * 1000) - 3600000 );
-			$("#timecontent").text( time.getHours()+"h" + " "+ time.getMinutes()+"m"); },
-		change: function() {
-			if( curSlide != $("#starthour").slider("value") ) {
-				curSlide = $("#starthour").slider("value");
-				callRefresh();
-			}
-		}
-	});
-	
-	// Button
-	$('#views input[value="'+activeView+'"]').addClass("active");
-	$("#views input").click(function() {
-		if( activeView != $(this).val() ) {
-		$('#views input[value="'+activeView+'"]').removeClass("active");
-		activeView = $(this).val();
-		$(this).addClass("active");
-		callRefresh();
-		}
-	});
-	
-	// Action on refresh
-	$("#refresh").click(function(){ callRefresh() });
-	
-	curDate		= $("#startdate").val();
-	curSlide	= $("#starthour").slider("value");
-	
-	callRefresh();
+
+    // DatePicker (date)
+    $("#startdate").datepicker({
+        defaultDate: "+0d",
+        dateFormat: "@",
+        onSelect: function() {
+            if( curDate != $("#startdate").val() ) {
+                curDate = $("#startdate").val();
+                callRefresh();
+            }
+        }
+    }); $("#startdate").datepicker('setDate','+0d');
+
+    // Slider (time)
+    $("#starthour").slider({
+        max: 86340,
+        step: 60,
+        create: function() { $("#timecontent").text('0h 00m'); },
+        slide: function(event, ui) {
+            var time = new Date();
+            time.setTime( (ui.value * 1000) - 3600000 );
+            $("#timecontent").text( time.getHours()+"h" + " "+ time.getMinutes()+"m"); },
+        change: function() {
+            if( curSlide != $("#starthour").slider("value") ) {
+                curSlide = $("#starthour").slider("value");
+                callRefresh();
+            }
+        }
+    });
+
+    // Button
+    $('#views input[value="'+activeView+'"]').addClass("active");
+    $("#views input").click(function() {
+        if( activeView != $(this).val() ) {
+        $('#views input[value="'+activeView+'"]').removeClass("active");
+        activeView = $(this).val();
+        $(this).addClass("active");
+        callRefresh();
+        }
+    });
+
+    // Action on refresh
+    $("#refresh").click(function(){ callRefresh() });
+
+    curDate     = $("#startdate").val();
+    curSlide    = $("#starthour").slider("value");
+
+    callRefresh();
  });
 
 </script>
@@ -87,31 +87,31 @@ input.active { color: #c00; }
 
 <div id="chart" style="width: 100%; height: 80%; ">Chart ... (in dev)</div>
 <div id="date">
-	<fieldset style="position: relative;">
-	<legend>Date: </legend>
-		<div style="float: left; width: 20%;"><label for="startdate">Date: </label><input type="text" id="startdate"></div>
-		<div style="float: left; width: 80%;"><label for="starthour" >Time: <span id="timecontent"></span></label><div id="starthour"></div></div>
-	</fieldset>
+    <fieldset style="position: relative;">
+    <legend>Date: </legend>
+        <div style="float: left; width: 20%;"><label for="startdate">Date: </label><input type="text" id="startdate"></div>
+        <div style="float: left; width: 80%;"><label for="starthour" >Time: <span id="timecontent"></span></label><div id="starthour"></div></div>
+    </fieldset>
 </div>
 
 <div id="views">
-	<fieldset>
-	<legend>Views:</legend>
-		<input type="button" class="view" value="month">
-		<input type="button" class="view" value="week">
-		<input type="button" class="view" value="day">
-		<input type="button" class="view" value="hour">
-	</fieldset>
+    <fieldset>
+    <legend>Views:</legend>
+        <input type="button" class="view" value="month">
+        <input type="button" class="view" value="week">
+        <input type="button" class="view" value="day">
+        <input type="button" class="view" value="hour">
+    </fieldset>
 </div>
 <input type="button" id="refresh" value="refresh" style="float: right">
 
 <select id="sensors2seeOnChart">
-	<option selected value="temp_core">Core(s) temperatures</option>
-	<option value="temp_mb">Motherboard temperatures</option>
-	<option value="temp_others">Others devices temperatures</option>
-	<option value="fan">fans</option>
-	<option value="volt">voltages</option>
-	<option value="monitor">monitor value(s)</option>
+    <option selected value="default">Default Sensor</option>
+    <option value="temp_core">Core(s) temperatures</option>
+    <option value="temp_mb">Motherboard temperatures</option>
+    <option value="temp_others">Others devices temperatures</option>
+    <option value="fan">fans</option>
+    <option value="volt">voltages</option>
 </select>
 
 

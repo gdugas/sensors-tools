@@ -29,7 +29,7 @@ for temp in temps.getElementsByTagName("temperature"):
             description = "\nDevice : "+ str(values['dev'])
             description = description+"\nNumber : "+str(values['num'])
             description = description+"\nValue : "+str(values['value'])
-            description = description + " > " + \
+            description = description + " >= " + \
             str(sensorsConf.SENSORS_trigger)
 
 if sensorsConf.ACTION_monitor == "mail":
