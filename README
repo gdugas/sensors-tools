@@ -26,14 +26,18 @@ or
    
 $ sudo python install.py
 
-You have to create a symlinks in your www directory to map to the www 
-subdirectory of sensor-tools here.
+Then, if you want to see chart on a web server, you have to create a symlinks
+ in your www directory to map to the www subdirectory of sensor-tools here.
+For example, with Apache and /var/www for document root (this is default configuration) :
+cd /var/www
+ln -s [YOUR_SENSORS_INSTALL_DIR]/www sensors
+Where 'sensors' is the name of your symbolic link.
 
 [CONFIGURATION]
 
 First edit sensorsConf.py to map to your system and your preferences.
-To know what device(s) you want to monitor, you can execute :
-python bin/sensors-xml
+To know what device(s) you want to monitor, you can execute (from install directory) :
+bin/sensors-xml
 from sensors-tools install directory
 
 You can add a treshold to email you for temperature alerts.
