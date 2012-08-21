@@ -236,7 +236,7 @@ function parseAttr(monitor,time_index,num,attr,value)
             {
             myseries['motherboard_fans'][num][time_index] = parseInt(value);
             }
-        else if(attr == 'unknown_fan')
+        else if(attr == 'unknown_fan' || attr == 'fan')
             {
             myseries['unknown_fans'][num][time_index] = parseInt(value);
             }
