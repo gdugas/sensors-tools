@@ -143,6 +143,7 @@ function refreshChart(getData, data, monitor) {
                     }
                 else if (monitor == "fan")
                     {
+                    monitortype = "fan";
                     myseries['cpu_fans'][num]             = [];
                     myseries['chassis_fans'][num]         = [];
                     myseries['motherboard_fans'][num]     = [];
@@ -150,6 +151,7 @@ function refreshChart(getData, data, monitor) {
                     }
                 else if (monitor == "volt")
                     {
+                    monitortype = "voltage";
                     myseries['vcore'][num]                = [];
                     myseries['volts3'][num]               = [];
                     myseries['volts5'][num]               = [];
@@ -600,6 +602,14 @@ function printChart(myarray,myname,time_index,monitor)
                         {
                         data: myarray[7][2],
                         name: myname[7][2],
+                        },
+                        {
+                        data: myarray[7][3],
+                        name: myname[7][3],
+                        },
+                        {
+                        data: myarray[7][4],
+                        name: myname[7][4],
                         },
                     ]
                 });
