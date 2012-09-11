@@ -8,7 +8,11 @@ wdir = os.path.abspath( os.path.dirname(sys.argv[0]) + '/..' )
 sys.path.append(wdir)
 
 from xml.dom.minidom import parseString
-import sensors.output,sensors.reportmime,sensorsConf
+import sensors.output
+import sensors.reportmime
+import util.checkProcess
+import sensorsConf
+
 
 report      = 0
 description = ""
@@ -34,13 +38,17 @@ for temp in temps.getElementsByTagName("temperature"):
 
 if sensorsConf.ACTION_monitor == "mail":
     if report == 1:
-        textreport = "Sensors report:\n"
-        textreport = textreport + "------------\n"
-        textreport = textreport + sensorsConf.EMAIL_text
-        textreport = textreport + "\n" + description
-        xml_detail = sensors.output.Xml()
-        sensors.reportmime.createhtmlmail(textreport,xml_detail,\
-        subject=None)
+        ignore_process = util.checkProcess.main()
+        if not ignore_process:
+            textreport = "Sensors report:\n"
+            textreport = textreport + "------------\n"
+            textreport = textreport + sensorsConf.EMAIL_text
+            textreport = textreport + "\n" + description
+            xml_detail = sensors.output.Xml()
+            sensors.reportmime.createhtmlmail(textreport,xml_detail,\
+            subject=None)
 else:
     if sensorsConf.ACTION_monitor != "":
-        subprocess.call(str(sensorsConf.ACTION_monitor),shell=True)
+        ignore_process = util.checkProcess.main()
+        if not ignore_process:
+            subprocess.call(str(sensorsConf.ACTION_monitor),shell=True)

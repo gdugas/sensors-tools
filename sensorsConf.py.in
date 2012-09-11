@@ -78,6 +78,16 @@ REPORT_time = "5"
 # action is 'mail', you will receive an email every 5 minutes.
 FIRST_alert_time = "5"
 # Check every N minutes for the 2nd alert (2minutes by default). If
-# action is shutdown on other computers from list, you will halt a
+# action is shutdown on other computers from a list, you will halt a
 # computer every 2 minutes.
 SECOND_alert_time = "2"
+
+"""
+#######################
+## Advanced parameters
+"""
+# if you have a process that exceeds a threshold of CPU usage
+# and if this is a temporary heat sensor, you'll probably want to skip
+# this process beyond a certain level to use for your monitoring warning
+PROC_SCRIPT_NAME = ""
+CPU_MIN_VAL_FOR_PROC = ""
