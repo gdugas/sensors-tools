@@ -87,9 +87,12 @@ SECOND_alert_time = "2"
 ## Advanced parameters
 """
 # if you have a process that exceeds a threshold of CPU usage
-# and if this is a temporary heat sensor, you'll probably want to skip
-# this process for your monitoring warnings
+# and if that causes a temporary overheat for your sensor,
+# you'll probably want to skip this process for your monitoring warnings
+
+# If the next value is given, you must give a CPU percentage for
+# this process.
 PROC_SCRIPT_NAME = ""
-# Percentage of CPU used => If this treshold is exceeded the sensorsd
-# daemon will ignore monitoring message/actions.
+# Percentage of CPU used => If this treshold is exceeded by the previous
+# process, the sensorsd daemon will ignore monitoring message/actions.
 CPU_MIN_VAL_FOR_PROC = ""

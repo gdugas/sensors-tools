@@ -65,10 +65,12 @@ def main():
     file it returns True. Otherwise it is False
     """
     over_treshold = False
-    std_output = check_ps_cmd()
-    if std_output:
-        res = is_script_running(std_output)
-        if res is True:
-            over_treshold = check_cpu_for_proc(std_output)
+    if PROC_SCRIPT_NAME != "" and CPU_MIN_VAL_FOR_PROC != "":
+        std_output = check_ps_cmd()
+        if std_output:
+            res = is_script_running(std_output)
+            if res is True:
+                over_treshold = check_cpu_for_proc(std_output)
     return over_treshold
     sys.exit()
+
