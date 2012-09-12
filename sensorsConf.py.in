@@ -92,7 +92,7 @@ SECOND_alert_time = "2"
 
 # If the next value is given, you must give a CPU percentage for
 # this process.
-PROC_SCRIPT_NAME = ""
+PROC_SCRIPT_NAME_IGNORE = ""
 # Percentage of CPU used => If this treshold is exceeded by the previous
 # process, the sensorsd daemon will ignore monitoring message/actions.
 CPU_MIN_VAL_FOR_PROC = ""

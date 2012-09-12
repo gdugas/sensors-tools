@@ -6,7 +6,7 @@ import os
 from subprocess import Popen, call, PIPE
 import sensorsConf
 
-PROC_SCRIPT_NAME = sensorsConf.PROC_SCRIPT_NAME
+PROC_SCRIPT_NAME = sensorsConf.PROC_SCRIPT_NAME_IGNORE
 CPU_MIN_VAL_FOR_PROC = sensorsConf.CPU_MIN_VAL_FOR_PROC
 
 def check_cpu_for_proc(std_output):
@@ -22,9 +22,8 @@ def check_cpu_for_proc(std_output):
         if curline :
             data = curline.split()
             if float(data[2]) >= CPU_MIN_VAL_FOR_PROC:
-                return True
-            else:
-                return False
+                res = True
+    return res
 
 def check_ps_cmd():
     """
