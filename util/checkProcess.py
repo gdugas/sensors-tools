@@ -21,7 +21,7 @@ def check_cpu_for_proc(std_output):
     for curline in std_output:
         if curline :
             data = curline.split()
-            if float(data[2]) >= CPU_MIN_VAL_FOR_PROC:
+            if float(data[2]) >= float(CPU_MIN_VAL_FOR_PROC):
                 res = True
     return res
 
@@ -54,8 +54,6 @@ def is_script_running(std_output):
             res = True
     return res
 
-if __name__ == "__main__":
-    main()
 
 def main():
     """
@@ -72,4 +70,8 @@ def main():
                 over_treshold = check_cpu_for_proc(std_output)
     return over_treshold
     sys.exit()
+
+
+if __name__ == "__main__":
+    main()
 
