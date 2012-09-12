@@ -120,9 +120,14 @@ alert (first trigger) ["+ str(count)+" time(s)]")
             Send email temperature report to address defined in
             configuration file
         """
-        import sensors.output,sensors.reportmime
-        xml_detail = sensors.output.Xml()
-        sensors.reportmime.createhtmlmail(message,xml_detail,subject)
+        import sensors.output
+        import sensors.reportmime
+        import util.checkProcess
+        ignore_process = util.checkProcess.main()
+        if not ignore_process:
+            xml_detail = sensors.output.Xml()
+            sensors.reportmime.createhtmlmail(message,xml_detail,\
+            subject)
 
 
 main = Sensorsd()
